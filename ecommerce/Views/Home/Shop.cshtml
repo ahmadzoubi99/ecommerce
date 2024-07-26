@@ -25,22 +25,25 @@
 </div>
 <!-- End Hero Section -->
 
-
+<br />
+<br />
 <form asp-action="SearchByProudctName" method="post" class="form-inline mb-3">
-	<input type="text" name="name" class="form-control mr-2" placeholder="Search by name" />
-	<button type="submit" class="btn btn-primary">Search</button>
-</form>
-<ul>
-	@foreach (var item in Model.Item1)
-	{
-		<div>
-			<a asp-action="ProductByCategorie" asp-route-id="@item.Id">
-				<p>@item.Name</p>
-			</a>
+	<div style="display:flex;justify-content: flex-start;gap: 50%;">
+		<div style="display:flex;gap:3px;padding-left:2%; ">
+			<input type="text" name="name" class="form-control mr-2" placeholder="Search by name" style="width:200px;margin-left:3%;" />
+			<br />
+			<button type="submit" class="btn btn-primary" style="font-size:90%;">Search</button>
 		</div>
-	}
+		<select style="width:20%;padding-right:2%;">
+			@foreach (var item in Model.Item1)
+			{
+				<option value="value" style="padding:10px;">@item.Name</option>
+			}
 
-</ul>
+		</select>
+	</div>
+</form>
+
 <div class="untree_co-section product-section before-footer-section">
 	<div class="container">
 		<div class="row">
