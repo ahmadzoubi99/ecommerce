@@ -162,5 +162,22 @@ namespace ecommerce.Controllers
         {
           return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchByUsertName(string? name)
+        {
+            var user = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                user = user.Where(u => u.FullName.Contains(name));
+            }
+
+            var users = await user.ToListAsync();
+
+            return View("Index", users);
+        }
+
+
     }
 }

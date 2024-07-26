@@ -161,5 +161,23 @@ namespace ecommerce.Controllers
         {
           return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchByProducttName(string? name)
+        {
+            var product = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                product = product.Where(u => u.Name.Contains(name));
+            }
+
+            var products = await product.ToListAsync();
+
+
+            return View("Index", products);
+        }
     }
+
+
 }

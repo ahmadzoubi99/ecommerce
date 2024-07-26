@@ -11,7 +11,10 @@
         <div class="col-12">
             <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4">Products</h6>
-
+                    <form asp-action="SearchByUsertName" method="post" class="form-inline mb-3">
+                        <input type="text" name="name" class="form-control mr-2" placeholder="Search by name" />
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
                 <p>
                     <a asp-action="Create" class="btn btn-success mb-3">Create New</a>
                 </p>
