@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ecommerce.Context;
 using ecommerce.Models;
+using ecommerce.Models;
+using Ecommerce.Context;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ecommerce.Controllers
 {
@@ -61,12 +65,11 @@ namespace ecommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,OrderId,ProductId,Quantity,Price")] OrderItem orderItem)
         {
-            if (ModelState.IsValid)
-            {
+          
                 _context.Add(orderItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            
             ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderItem.OrderId);
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", orderItem.ProductId);
             return View(orderItem);
@@ -102,8 +105,7 @@ namespace ecommerce.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+           
                 try
                 {
                     _context.Update(orderItem);
@@ -119,7 +121,7 @@ namespace ecommerce.Controllers
                     {
                         throw;
                     }
-                }
+                
                 return RedirectToAction(nameof(Index));
             }
             ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderItem.OrderId);

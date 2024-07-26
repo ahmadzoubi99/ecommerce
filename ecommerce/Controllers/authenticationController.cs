@@ -1,6 +1,7 @@
-﻿using Ecommerce.Context;
-using Ecommerce.Models;
+﻿using ecommerce.Models;
+using Ecommerce.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Controllers
 {

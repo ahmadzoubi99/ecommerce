@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ecommerce.Models.Testimonial>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "AdminLayout"; // Ensure the layout is set
+}
+<div style="padding-left:30px;padding-top:25px">
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Testimonial Table</h6>
+
+                <form asp-action="SearchByName" method="post" class="form-inline mb-3">
+                    <input type="text" name="name" class="form-control mr-2" placeholder="Search by user name" />
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+                <br />
+                <a asp-action="Create" class="btn btn-success mb-3">Create New</a>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Content</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@item.Id</th>
+                                    <td>@Html.DisplayFor(modelItem => item.User.Id)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Content)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

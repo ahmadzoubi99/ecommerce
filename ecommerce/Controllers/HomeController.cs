@@ -3,7 +3,7 @@ using Ecommerce.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ecommerce.Controllers
+namespace ecommerce.Controllers
 {
 	public class HomeController : Controller
 	{
