@@ -166,6 +166,8 @@ namespace ecommerce.Controllers
         [HttpPost]
         public async Task<IActionResult> SearchByUsertName(string? name)
         {
+
+
             var user = _context.Users.AsQueryable();
 
             if (!string.IsNullOrEmpty(name))
