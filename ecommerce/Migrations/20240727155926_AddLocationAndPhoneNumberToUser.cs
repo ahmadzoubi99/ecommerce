@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ecommerce.Migrations
 {
-    public partial class firstmigration : Migration
+    public partial class AddLocationAndPhoneNumberToUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -88,6 +88,8 @@ namespace ecommerce.Migrations
                     PasswordHash = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    phoneNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: true)

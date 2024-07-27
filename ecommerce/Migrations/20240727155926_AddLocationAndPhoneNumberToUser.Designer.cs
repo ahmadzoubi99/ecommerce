@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ecommerce.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240727131942_AddLocationAndPhoneNumberToUser")]
+    [Migration("20240727155926_AddLocationAndPhoneNumberToUser")]
     partial class AddLocationAndPhoneNumberToUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
