@@ -27,13 +27,14 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Password Hash</th>
-                                <th scope="col">Email</th>
                                 <th scope="col">Full Name</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Image</th>
-                                <th scope="col">Role</th>
+                                <th scope="col">Role name</th>
                                 <th scope="col">Birthday</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">phone Number</th>
+
                                 <th></th>
                             </tr>
                         </thead>
@@ -42,8 +43,7 @@
                             {
                                 <tr>
                                     <th scope="row">@item.Id</th>
-                                    <td>@(item.Username ?? "N/A")</td>
-                                    <td>@(item.PasswordHash ?? "N/A")</td>
+                                    <td>@(item.FullName ?? "N/A")</td>
                                     <td>@(item.Email ?? "N/A")</td>
                                     <td>@(item.FullName ?? "N/A")</td>
                                     <td>
@@ -56,8 +56,11 @@
                                             <span>No photo</span>
                                         }
                                     </td>
-                                    <td>@(item.Role?.Id.ToString() ?? "N/A")</td>
+                                    <td>@item.Role.Name</td>
                                     <td>@(item.Birthday?.ToString("yyyy-MM-dd") ?? "N/A")</td>
+                                    <td>@item.Location</td>
+                                    <td>@item.phoneNumber</td>
+
                                     <td>
                                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                                         <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
