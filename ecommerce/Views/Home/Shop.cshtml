@@ -49,39 +49,6 @@
 		<div class="row">
 
 
-			@foreach (var item in Model.Item2)
-			{
-				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-					<a class="product-item" href="cart.html">
-						<img src="@Url.Content("~/images/" + item.Image)" class="img-fluid product-thumbnail" asp-append-version="true" />
-
-						@* 					<img src="~/HomeAssets/images/product-1.png" class="img-fluid product-thumbnail">
-					*@					<h3 class="product-title">@item.Name</h3>
-						<strong class="product-price">$@item.Price</strong>
-						<span class="icon-cross">
-							<a href="#">
-								<img src="~/HomeAssets/images/cross.svg" class="img-fluid">
-							</a>
-
-						</span>
-					</a>
-				</div>
-			}
-			@foreach (var item in Model.Item2)
-			{
-				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-					<a class="product-item" href="cart.html">
-						<img src="@Url.Content("~/images/" + item.Image)" class="img-fluid product-thumbnail" asp-append-version="true" />
-				         <h3 class="product-title">@item.Name</h3>
-						<strong class="product-price">$@item.Price</strong>
-						<span class="icon-cross">
-							<a href="">
-								<img src="~/HomeAssets/images/cross.svg" class="img-fluid">
-							</a>
-						</span>
-					</a>
-				</div>
-			}
 			<!-- Start Column 4 -->
 			@foreach (var item in Model.Item2)
 			{

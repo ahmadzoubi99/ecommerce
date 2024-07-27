@@ -46,15 +46,14 @@
                                     <td>@(item.FullName ?? "N/A")</td>
                                     <td>@(item.Email ?? "N/A")</td>
                                     <td>@(item.FullName ?? "N/A")</td>
+                                    <td>@(item.ImagePath ?? "N/A")</td>
+
                                     <td>
-                                        @if (!string.IsNullOrEmpty(item.ImagePath))
-                                        {
-                                            <img src="@Url.Content("~/Images/" + item.ImagePath)" asp-append-version="true" width="100" height="100" />
-                                        }
-                                        else
-                                        {
-                                            <span>No photo</span>
-                                        }
+
+
+                                            <img src="@Url.Content("~/images/" + item.ImagePath)" asp-append-version="true" width="100" height="100" />
+
+                                    
                                     </td>
                                     <td>@item.Role.Name</td>
                                     <td>@(item.Birthday?.ToString("yyyy-MM-dd") ?? "N/A")</td>

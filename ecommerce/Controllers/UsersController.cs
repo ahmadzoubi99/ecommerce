@@ -16,11 +16,13 @@ namespace ecommerce.Controllers
     {
 		
 		private readonly MyContext _context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public UsersController(MyContext context)
+        public UsersController(MyContext context, IWebHostEnvironment webHostEnvironment)
         {
-			
-			_context = context;
+
+            _context = context;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Users
@@ -61,10 +63,26 @@ namespace ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,PasswordHash,Email,FullName,Location,phoneNumber,ImagePath,RoleId,Birthday")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Username,PasswordHash,Email,FullName,Location,phoneNumber,ImagePath,RoleId,Birthday,ImageFile")] User user)
         {
-            
-                _context.Add(user);
+            if (user.ImageFile != null)
+            {
+                string wwwRootPath = webHostEnvironment.WebRootPath;
+
+                string fileName = Guid.NewGuid().ToString() + user.ImageFile.FileName;
+
+                string path = Path.Combine(wwwRootPath + "/Images/" + fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await user.ImageFile.CopyToAsync(fileStream);
+                }
+
+                user.ImagePath = fileName;
+            }
+
+
+            _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             
@@ -94,7 +112,7 @@ namespace ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,PasswordHash,Email,FullName,Location,phoneNumber,ImagePath,RoleId,Birthday")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,PasswordHash,Email,FullName,Location,phoneNumber,ImagePath,RoleId,Birthday,ImageFile")] User user)
         {
             if (id != user.Id)
             {
@@ -104,7 +122,22 @@ namespace ecommerce.Controllers
          
                 try
                 {
-                    _context.Update(user);
+                if (user.ImageFile != null)
+                {
+                    string wwwRootPath = webHostEnvironment.WebRootPath;
+
+                    string fileName = Guid.NewGuid().ToString() + user.ImageFile.FileName;
+
+                    string path = Path.Combine(wwwRootPath + "/Images/" + fileName);
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await user.ImageFile.CopyToAsync(fileStream);
+                    }
+
+                    user.ImagePath = fileName;
+                }
+                _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

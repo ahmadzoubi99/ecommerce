@@ -1,5 +1,6 @@
 ﻿using ecommerce.Models;
 using Ecommerce.Context;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.Controllers
@@ -25,8 +26,8 @@ namespace Ecommerce.Controllers
 
             if (existingUser != null)
             {
-                HttpContext.Session.SetInt32("userId", user.Id);
-
+                HttpContext.Session.SetInt32("userId", existingUser.Id);
+                int x =Convert.ToInt32(HttpContext.Session.GetInt32("userId"));
                 switch (existingUser.RoleId)
                 {
                     case 1:
