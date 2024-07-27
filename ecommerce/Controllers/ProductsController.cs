@@ -12,11 +12,14 @@ namespace ecommerce.Controllers
 {
     public class ProductsController : Controller
     {
+        private readonly IWebHostEnvironment webHostEnvironment;
+
         private readonly MyContext _context;
 
-        public ProductsController(MyContext context)
+        public ProductsController(MyContext context,IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Products
@@ -57,10 +60,26 @@ namespace ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,Image,DiscountValue,Stock,CategoryId")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,Image,DiscountValue,Stock,CategoryId,ImageFile")] Product product)
         {
-           
-                _context.Add(product);
+
+            if (product.ImageFile != null)
+            {
+                string wwwRootPath = webHostEnvironment.WebRootPath;
+
+                string fileName = Guid.NewGuid().ToString() + product.ImageFile.FileName;
+
+                string path = Path.Combine(wwwRootPath + "/Images/" + fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await product.ImageFile.CopyToAsync(fileStream);
+                }
+
+                product.Image = fileName;
+            }
+
+            _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             
@@ -90,7 +109,7 @@ namespace ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,Image,DiscountValue,Stock,CategoryId")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,Image,DiscountValue,Stock,CategoryId,ImageFile")] Product product)
         {
             if (id != product.Id)
             {
@@ -99,7 +118,22 @@ namespace ecommerce.Controllers
 
               try
                 {
-                    _context.Update(product);
+                if (product.ImageFile != null)
+                {
+                    string wwwRootPath = webHostEnvironment.WebRootPath;
+
+                    string fileName = Guid.NewGuid().ToString() + product.ImageFile.FileName;
+
+                    string path = Path.Combine(wwwRootPath + "/Images/" + fileName);
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await product.ImageFile.CopyToAsync(fileStream);
+                    }
+
+                    product.Image = fileName;
+                }
+                _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

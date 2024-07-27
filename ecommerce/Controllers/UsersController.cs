@@ -57,9 +57,9 @@ namespace ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Username,PasswordHash,Email,FullName,Location,phoneNumber,ImagePath,RoleId,Birthday")] User user)
         {
-          
+            
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -90,14 +90,14 @@ namespace ecommerce.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,PasswordHash,Email,FullName,Location,phoneNumber,ImagePath,RoleId,Birthday")] User user)
         {
             if (id != user.Id)
             {
                 return NotFound();
             }
 
-            
+         
                 try
                 {
                     _context.Update(user);
@@ -113,9 +113,9 @@ namespace ecommerce.Controllers
                     {
                         throw;
                     }
-                
+                }
                 return RedirectToAction(nameof(Index));
-            }
+            
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", user.RoleId);
             return View(user);
         }
@@ -162,24 +162,5 @@ namespace ecommerce.Controllers
         {
           return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
-        [HttpPost]
-        public async Task<IActionResult> SearchByUsertName(string? name)
-        {
-
-
-            var user = _context.Users.AsQueryable();
-
-            if (!string.IsNullOrEmpty(name))
-            {
-                user = user.Where(u => u.FullName.Contains(name));
-            }
-
-            var users = await user.ToListAsync();
-
-            return View("Index", users);
-        }
-
-
     }
 }

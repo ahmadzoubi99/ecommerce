@@ -2,8 +2,6 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "AdminLayout";
-
 }
 
 <h1>Edit</h1>
@@ -36,6 +34,16 @@
                 <span asp-validation-for="FullName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="phoneNumber" class="control-label"></label>
+                <input asp-for="phoneNumber" class="form-control" />
+                <span asp-validation-for="phoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ImagePath" class="control-label"></label>
                 <input asp-for="ImagePath" class="form-control" />
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
@@ -61,3 +69,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,7 +1,6 @@
 ﻿using ecommerce.Models;
 using Ecommerce.Context;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Controllers
 {
@@ -69,6 +68,16 @@ namespace Ecommerce.Controllers
                 return RedirectToAction("Login");
             }
         }
+
+
+
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
+
 
     }
 }

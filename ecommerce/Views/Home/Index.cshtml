@@ -1,6 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Tuple<IEnumerable<Category>,IEnumerable<Product>, IEnumerable<Testimonial>>
+
 @{
 	Layout = "HomeLayout";
 }
@@ -237,7 +236,7 @@
 
 					<div class="testimonial-slider">
 
-						@* 			@foreach (var item in Model)
+									@foreach (var item in Model.Item3)
 						{
 						<div class="item">
 						<div class="row justify-content-center">
@@ -245,22 +244,22 @@
 
 						<div class="testimonial-block text-center">
 						<blockquote class="mb-5">
-						<p>&ldquo;Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer convallis volutpat dui quis scelerisque.&rdquo;</p>
+						<p>@item.Content</p>
 						</blockquote>
 
 						<div class="author-info">
 						<div class="author-pic">
-						<img src="~/HomeAssets/images/person-1.png" alt="Maria Jones" class="img-fluid">
+						<img  src="@Url.Content("~/images/" + item.User.ImagePath )" asp-append-version="true"  alt="Maria Jones" class="img-fluid">
 						</div>
-						<h3 class="font-weight-bold">Maria Jones</h3>
-						<span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
+						<h3 class="font-weight-bold">@item.User.FullName</h3>
+						<span class="position d-block mb-3">@item.User.Location</span>
 						</div>
 						</div>
 
 						</div>
 						</div>
 						</div>
-						} *@
+						}
 
 						<!-- END item -->
 

@@ -54,8 +54,8 @@
                                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Image)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.DiscountValue)</td>
+                                        <img src="@Url.Content("~/Images/" + item.Image )" asp-append-version="true" width="100" height="100" />
+                                        <td>@Html.DisplayFor(modelItem => item.DiscountValue)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Stock)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
                                     <td>

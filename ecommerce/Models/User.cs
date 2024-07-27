@@ -16,9 +16,15 @@ namespace ecommerce.Models
 		public string Email { get; set; }
 		[MaxLength(100)]
 		public string FullName { get; set; }
+		[MaxLength(255)]
+		public string Location { get; set; }
+		[MaxLength(50)]
+		public string phoneNumber { get; set; }
 		[MaxLength(1000)]
 		public string ImagePath { get; set; }
-		public int? RoleId { get; set; }
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
+        public int? RoleId { get; set; }
 		[ForeignKey("RoleId")]
 		public Role Role { get; set; }
 		public DateTime? Birthday { get; set; }
