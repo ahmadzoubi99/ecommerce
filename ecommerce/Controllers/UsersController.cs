@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +14,13 @@ namespace ecommerce.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly MyContext _context;
+		
+		private readonly MyContext _context;
 
         public UsersController(MyContext context)
         {
-            _context = context;
+			
+			_context = context;
         }
 
         // GET: Users

@@ -26,5 +26,6 @@ namespace ecommerce.Models
 		public ICollection<Testimonial> Testimonials { get; set; }
 
 
+
 	}
 }
