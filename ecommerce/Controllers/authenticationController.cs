@@ -38,7 +38,7 @@ namespace Ecommerce.Controllers
             }
             else
             {
-                ViewBag.Error = "username or password is incoorect pleace try again .";
+                ViewBag.LoginError = "username or password is incoorect pleace try again .";
             }
             return View();
         }
@@ -46,7 +46,8 @@ namespace Ecommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday")] User user)
+        public async Task<IActionResult> Register
+            ([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday")] User user)
         {
             user.Username = user.Email;
             user.ImagePath = "";
@@ -57,7 +58,7 @@ namespace Ecommerce.Controllers
 
             if (existingUser != null)
             {
-                ViewBag.Error = "Email is already used";
+                ViewBag.RegisterError = "Email is already used";
                 return View("Login", user);
             }
             else
