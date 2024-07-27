@@ -2,82 +2,73 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "AdminLayout";
 }
 
-<h1>Index</h1>
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">User Table</h6>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PasswordHash)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.phoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Role)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Birthday)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PasswordHash)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.phoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagePath)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Birthday)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <div class="d-flex mb-3">
+                    <div class="flex-grow-1 mr-2" style="flex-basis: 75%;">
+                        <form asp-action="SearchByName" method="post" class="d-flex align-items-center">
+                            <input type="text" name="name" class="form-control" placeholder="Search by user" style="margin-right: 2%;" />
+                            <button type="submit" class="btn btn-primary" style="width: 20%;">Search</button>
+                        </form>
+                    </div>
+                    <div style="flex-basis: 15%;">
+                        <a asp-action="Create" class="btn btn-success w-100" style="margin-left: 2%;">Create New</a>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Password Hash</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Full Name</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Birthday</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@item.Id</th>
+                                    <td>@(item.Username ?? "N/A")</td>
+                                    <td>@(item.PasswordHash ?? "N/A")</td>
+                                    <td>@(item.Email ?? "N/A")</td>
+                                    <td>@(item.FullName ?? "N/A")</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.ImagePath))
+                                        {
+                                            <img src="@Url.Content("~/Images/" + item.ImagePath)" asp-append-version="true" width="100" height="100" />
+                                        }
+                                        else
+                                        {
+                                            <span>No photo</span>
+                                        }
+                                    </td>
+                                    <td>@(item.Role?.Id.ToString() ?? "N/A")</td>
+                                    <td>@(item.Birthday?.ToString("yyyy-MM-dd") ?? "N/A")</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

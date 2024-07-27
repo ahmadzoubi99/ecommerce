@@ -49,8 +49,11 @@ namespace Ecommerce.Controllers
         public async Task<IActionResult> Register
             ([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday")] User user)
         {
-            user.Username = user.Email;
+            user.Email= user.Email;
             user.ImagePath = "";
+            user.FullName=user.Username;
+            user.PasswordHash = user.PasswordHash;
+            user.Birthday= user.Birthday;
             user.RoleId = 2;
             var existingUser = _context.Users
                 .Where(u => u.Email == user.Email)
