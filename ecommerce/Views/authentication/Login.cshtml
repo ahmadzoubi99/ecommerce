@@ -11,10 +11,10 @@
     <form method="post" asp-controller="authentication" asp-action="Register" class="signup">
         <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
         <div class="form-holder">
-            <input type="text" asp-for="FullName" class="input a" placeholder="Name" style="height: 50px;" />
-            <input type="email" asp-for="Email" class="input" placeholder="Email" style="height: 50px;" />
-            <input type="password" asp-for="PasswordHash" class="input" placeholder="Password" style="height: 50px;" />
-            <input type="date" asp-for="Birthday" class="input" style="color:gray; height: 50px;" />
+            <input type="text" name="Username" class="input a" placeholder="Name" style="height: 50px;" />
+            <input type="email" name="Email" class="input" placeholder="Email" style="height: 50px;" />
+            <input type="password" name="PasswordHash" class="input" placeholder="Password" style="height: 50px;" />
+            <input type="date" name="Birthday" class="input" style="color:gray; height: 50px;" />
             <p class="error">@ViewBag.RegisterError</p>
         </div>
         <button type="submit" class="submit-btn">Sign up</button>
@@ -36,8 +36,8 @@
         <div class="center">
             <h2 class="form-title" id="login"><span>or</span>Log in</h2>
             <div class="form-holder">
-                <input type="email" asp-for="Email" class="input" placeholder="Email" />
-                <input type="password" asp-for="PasswordHash" class="input" placeholder="Password" />
+                <input type="email" name="username" class="input" placeholder="Email" />
+                <input type="password" name="password" class="input" placeholder="Password" />
             </div>
             <button type="submit" class="submit-btn">Log in</button>
         </div>
