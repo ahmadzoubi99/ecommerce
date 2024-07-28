@@ -12,28 +12,29 @@
                 <h6 class="mb-4">User Table</h6>
 
                 <div class="d-flex mb-3">
-                    <div class="flex-grow-1 mr-2" style="flex-basis: 75%;">
+                    <div class="flex-grow-1 mr-2">
                         <form asp-action="SearchByName" method="post" class="d-flex align-items-center">
-                            <input type="text" name="name" class="form-control" placeholder="Search by user" style="margin-right: 2%;" />
-                            <button type="submit" class="btn btn-primary" style="width: 20%;">Search</button>
+                            <input type="text" name="name" class="form-control" placeholder="Search by user" />
+                            <button type="submit" class="btn btn-primary ms-2">Search</button>
                         </form>
                     </div>
-                    <div style="flex-basis: 15%;">
-                        <a asp-action="Create" class="btn btn-success w-100" style="margin-left: 2%;">Create New</a>
+                    <div>
+                        <a asp-action="Create" class="btn btn-success">Create New</a>
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table">
-                        <thead>
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Full Name</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Role Name</th>
                                 <th scope="col">Image</th>
-                                <th scope="col">Role name</th>
                                 <th scope="col">Birthday</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">phone Number</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Action</th>
 
                                 <th></th>
                             </tr>
@@ -45,24 +46,16 @@
                                     <th scope="row">@item.Id</th>
                                     <td>@(item.FullName ?? "N/A")</td>
                                     <td>@(item.Email ?? "N/A")</td>
-                                    <td>@(item.FullName ?? "N/A")</td>
-                                    <td>@(item.ImagePath ?? "N/A")</td>
-
-                                    <td>
-
-
-                                            <img src="@Url.Content("~/images/" + item.ImagePath)" asp-append-version="true" width="100" height="100" />
-
-                                    
-                                    </td>
+                                    <td>@(item.Username ?? "N/A")</td>
                                     <td>@item.Role.Name</td>
-                                    <td>@(item.Birthday?.ToString("yyyy-MM-dd") ?? "N/A")</td>
-                                    <td>@item.Location</td>
-                                    <td>@item.phoneNumber</td>
-
                                     <td>
-                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                        <img src="@Url.Content("~/images/" + item.ImagePath)" asp-append-version="true" width="100" height="100" />
+                                    </td>
+                                    <td>@(item.Birthday?.ToString("yyyy-MM-dd") ?? "N/A")</td>
+                                    <td>@item.phoneNumber</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                                         <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                     </td>
                                 </tr>

@@ -1,6 +1,7 @@
 ﻿using ecommerce.Models;
 using Ecommerce.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace ecommerce.Controllers
@@ -15,7 +16,7 @@ namespace ecommerce.Controllers
 		}
 
 
-		public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
 		{
 			var products = myContext.Products.Include(c => c.Category).ToList();
 			var categories = myContext.Categories.ToList();
@@ -65,17 +66,23 @@ namespace ecommerce.Controllers
 			return View("Shop", model);
 		}
 		[HttpPost]
-		public async Task<IActionResult> ProductByCategorie(int categoryId)
-		{
-			var products = await myContext.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
-			var categories = await myContext.Categories.ToListAsync();
+        //public async Task<IActionResult> ProductByCategorie(int categoryId)
+        //{
+        //	var products = await myContext.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
+        //	var categories = await myContext.Categories.ToListAsync();
 
-			var model = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
+        //	var model = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
 
-			return View("Shop", model);
-		}
+        //	return View("Shop", model);
+        //}
+        [HttpPost]
+        public async Task<IActionResult> ProductByCategorie(int categoryId)
+        {
+            var products = await myContext.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
+            return PartialView("_ProductListPartial", products);
+        }
 
-		/*
+        /*
 				public async Task<IActionResult> ProductByCategorie(int id)
 				{
 					var products = await myContext.Products.Where(p => p.CategoryId == id).ToListAsync();
@@ -86,7 +93,7 @@ namespace ecommerce.Controllers
 					return View("Shop", model);
 				}
 		*/
-		public IActionResult ContactUs()
+        public IActionResult ContactUs()
 		{
 			return View();
 		}
@@ -105,6 +112,43 @@ namespace ecommerce.Controllers
 
 			return View();
 		}
+        // GET: Testimonials/Create
+        public IActionResult Create()
+        {
+            ViewData["UserId"] = new SelectList(myContext.Users, "Id", "Id");
+            return View();
+        }
+		public IActionResult CTestimonial() 
+		{
+			return View();
+		}
 
-	}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CTestimonial([Bind("Id,UserId,Content,Status")] Testimonial testimonial)
+        {
+            var userId = HttpContext.Session.GetInt32("userId");
+
+			if (userId == null)
+			{
+				return RedirectToAction("Login", "authentication");
+			}
+            testimonial.UserId = userId.Value; 
+            testimonial.Status = "Pending";
+
+            
+                myContext.Add(testimonial);
+                await myContext.SaveChangesAsync();
+
+                // Redirect to the Index action
+                return RedirectToAction(nameof(Index));
+           
+
+            // If the model state is not valid, set the ViewData and return the view
+            ViewData["UserId"] = new SelectList(myContext.Users, "Id", "Id", testimonial.UserId);
+            return View(testimonial);
+        }
+
+
+    }
 }
