@@ -61,10 +61,10 @@ namespace ecommerce.Controllers
 			// Return the Shop view with the combined model
 			return View("Shop", model);
 		}
-
-		public async Task<IActionResult> ProductByCategorie(int id)
+		[HttpPost]
+		public async Task<IActionResult> ProductByCategorie(int categoryId)
 		{
-			var products = await myContext.Products.Where(p => p.CategoryId == id).ToListAsync();
+			var products = await myContext.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
 			var categories = await myContext.Categories.ToListAsync();
 
 			var model = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
@@ -72,6 +72,17 @@ namespace ecommerce.Controllers
 			return View("Shop", model);
 		}
 
+		/*
+				public async Task<IActionResult> ProductByCategorie(int id)
+				{
+					var products = await myContext.Products.Where(p => p.CategoryId == id).ToListAsync();
+					var categories = await myContext.Categories.ToListAsync();
+
+					var model = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
+
+					return View("Shop", model);
+				}
+		*/
 		public IActionResult ContactUs()
 		{
 			return View();
