@@ -75,25 +75,25 @@ namespace ecommerce.Controllers
 
         //	return View("Shop", model);
         //}
-        [HttpPost]
-        public async Task<IActionResult> ProductByCategorie(int categoryId)
-        {
-            var products = await myContext.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
-            return PartialView("_ProductListPartial", products);
-        }
+/*        [HttpPost]
+		public async Task<IActionResult> ProductByCategorie(int categoryId)
+		{
+			var products = await myContext.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
+			return PartialView("_ProductListPartial", products);
+		}
+*/
 
-        /*
-				public async Task<IActionResult> ProductByCategorie(int id)
-				{
-					var products = await myContext.Products.Where(p => p.CategoryId == id).ToListAsync();
-					var categories = await myContext.Categories.ToListAsync();
+		public async Task<IActionResult> ProductByCategorie(int id)
+		{
+			var products = await myContext.Products.Where(p => p.CategoryId == id).ToListAsync();
+			var categories = await myContext.Categories.ToListAsync();
 
-					var model = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
+			var model = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
 
-					return View("Shop", model);
-				}
-		*/
-        public IActionResult ContactUs()
+			return View("Shop", model);
+		}
+
+		public IActionResult ContactUs()
 		{
 			return View();
 		}
