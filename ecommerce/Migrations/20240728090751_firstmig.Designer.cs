@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ecommerce.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240726200528_wesmig")]
-    partial class wesmig
+    [Migration("20240728090751_firstmig")]
+    partial class firstmig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -296,6 +296,11 @@ namespace ecommerce.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -309,6 +314,11 @@ namespace ecommerce.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("phoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
