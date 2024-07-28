@@ -9,6 +9,17 @@ body {
   overflow-x: hidden;
   position: relative; }
 
+.circle {
+    display: inline-block;
+    width: 30px; /* Adjust size as needed */
+    height: 30px; /* Adjust size as needed */
+    line-height: 30px; /* Make sure this matches the height */
+    border-radius: 50%;
+    background-color: red; /* Circle background color */
+    color: white; /* Text color */
+    text-align: center;
+    font-size: 15px; /* Font size */
+}
 body {
   font-family: "Inter", sans-serif;
   font-weight: 400;

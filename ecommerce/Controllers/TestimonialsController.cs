@@ -170,8 +170,6 @@ namespace ecommerce.Controllers
             {
                 return NotFound();
             }
-
-           
                 try
                 {
                     testimonial.Status = "Approved";
@@ -203,8 +201,6 @@ namespace ecommerce.Controllers
             {
                 return NotFound();
             }
-
-           
                 try
                 {
                     testimonial.Status = "Reject";

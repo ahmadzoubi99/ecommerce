@@ -54,17 +54,37 @@
             <!-- Start Column 4 -->
             @foreach (var item in Model.Item2)
             {
-                <div class="col-12 col-md-4 col-lg-3 mb-5">
-                    <a class="product-item" href="#">
-                        <img src="@Url.Content("~/images/" + item.Image)" class="img-fluid product-thumbnail">
-                        <h3 class="product-title">@item.Name</h3>
-                        <strong class="product-price">$@item.Price</strong>
-                        <span class="icon-cross">
-                            <img src="~/HomeAssets/images/cross.svg" class="img-fluid">
+                    <div class="col-12 col-md-4 col-lg-3 mb-5">
+                        <a class="product-item" >
+                            <img src="@Url.Content("~/images/" + item.Image)" class="img-fluid product-thumbnail">
+                            <h3 class="product-title">@item.Name</h3>
+                            <strong class="product-price">$@item.Price</strong>
+                            <span class="icon-cross">
+
+                            <form method="post" type="submit" asp-action="AddToCart" asp-controller="Cart">
+                                <input type="hidden" name="ProductId" value="@item.Id" />
+                                <input type="hidden" name="Quantity" value="1" />
+                                <button>
+                                    <img src="~/HomeAssets/images/cross.svg" class="img-fluid">
+                                </button>
+                                </form>
                         </span>
-                    </a>
-                </div>
+                        </a>
+                    </div>
+              
+
             }
+            <div class="col-12 col-md-4 col-lg-3 mb-5">
+                <a class="product-item" href="#">
+                    <img src="images/product-3.png" class="img-fluid product-thumbnail">
+                    <h3 class="product-title">Ergonomic Chair</h3>
+                    <strong class="product-price">$43.00</strong>
+
+                    <span class="icon-cross">
+                        <img src="images/cross.svg" class="img-fluid">
+                    </span>
+                </a>
+            </div>
             <!-- End Column 4 -->
         </div>
     </div>

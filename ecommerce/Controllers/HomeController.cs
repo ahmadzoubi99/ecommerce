@@ -27,7 +27,10 @@ namespace ecommerce.Controllers
 
 		public async Task<IActionResult> Shop()
 		{
-			var products = myContext.Products.ToList();
+			var count= HttpContext.Session.GetInt32("countOfItem");
+            ViewBag.Count =HttpContext.Session.GetInt32("countOfItem");
+
+            var products = myContext.Products.ToList();
 			var categories = myContext.Categories.ToList();
 
 			var model3 = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);

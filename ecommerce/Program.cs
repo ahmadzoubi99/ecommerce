@@ -1,3 +1,4 @@
+using ecommerce.Cart;
 using Ecommerce.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -5,32 +6,50 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce
 {
-	public class Program
-	{
-		public static void Main(string[] args)
-		{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddSession(option => {
+
+            // Add HttpContextAccessor
+            builder.Services.AddHttpContextAccessor();
+
+            // Register the session service
+            builder.Services.AddSession(option =>
+            {
                 option.IdleTimeout = TimeSpan.FromMinutes(60);
             });
+
+            // Register the DbContext
             builder.Services.AddDbContext<MyContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Register application services
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<ICartService, CartService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
+
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication(); // Ensure authentication middleware is used
             app.UseAuthorization();
-            app.UseSession();
+
+            app.UseSession(); // Ensure session middleware is used
 
             app.MapControllerRoute(
                 name: "default",
@@ -38,5 +57,5 @@ namespace Ecommerce
 
             app.Run();
         }
-	}
+    }
 }
