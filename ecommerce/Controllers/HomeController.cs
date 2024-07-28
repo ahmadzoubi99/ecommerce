@@ -1,6 +1,7 @@
 ﻿using ecommerce.Models;
 using Ecommerce.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace ecommerce.Controllers
@@ -87,7 +88,23 @@ namespace ecommerce.Controllers
 		{
 			return View();
 		}
-		public IActionResult AboutUs()
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ContactUs([Bind("Id,Name,Email,Subject,Message,UserId")] ContactUs contactUs)
+        {
+			contactUs.Subject = "";
+            contactUs.UserId = HttpContext.Session.GetInt32("userId");
+            myContext.Add(contactUs);
+            await myContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+            ViewData["UserId"] = new SelectList(myContext.Users, "Id", "Id", contactUs.UserId);
+            return View(contactUs);
+        }
+        
+        public IActionResult AboutUs()
 		{
 			return View();
 		}
