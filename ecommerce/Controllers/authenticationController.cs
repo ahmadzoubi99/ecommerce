@@ -27,6 +27,9 @@ namespace Ecommerce.Controllers
             if (existingUser != null)
             {
                 HttpContext.Session.SetInt32("userId", existingUser.Id);
+                HttpContext.Session.SetString("name", existingUser.FullName);
+                HttpContext.Session.SetString("ImageUser", existingUser.ImagePath);
+
                 int x =Convert.ToInt32(HttpContext.Session.GetInt32("userId"));
                 switch (existingUser.RoleId)
                 {

@@ -14,6 +14,12 @@ namespace Ecommerce.Controllers
         }
         public IActionResult Index()
         {
+           ViewBag.name = HttpContext.Session.GetString("name");
+
+            ViewBag.ImageUser= HttpContext.Session.GetInt32("ImageUser");
+
+            var totalSale=_context.Orders.Sum(p=>p.TotalAmount);
+            ViewBag.totalSale= totalSale;
             return View();
         }
         public async Task<IActionResult> Product()

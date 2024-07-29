@@ -1,5 +1,6 @@
 ﻿using ecommerce.Models;
 using Ecommerce.Context;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,14 +11,16 @@ using System.Threading.Tasks;
 public class UserProfileController : Controller
 {
     private readonly MyContext _context;
-
-    public UserProfileController(MyContext context)
+    private readonly IWebHostEnvironment _webHostEnvironment;
+    public UserProfileController(MyContext context, IWebHostEnvironment webHostEnvironment)
     {
         _context = context;
+        _webHostEnvironment = webHostEnvironment;
     }
 
     public async Task<IActionResult> Index()
     {
+
         int? userId = HttpContext.Session.GetInt32("userId");
         if (userId == null || _context.Users == null)
         {
@@ -36,7 +39,7 @@ public class UserProfileController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-  
+
     public async Task<IActionResult> Edit([Bind("Id,Username,Email,FullName,ImagePath,RoleId,Birthday,ImageFile,phoneNumber,Location")] User user, string newPassword)
     {
         int? userId = HttpContext.Session.GetInt32("userId");
@@ -49,7 +52,21 @@ public class UserProfileController : Controller
         user.Id = userId.Value;
 
         var existingUser = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == user.Id);
+        if (user.ImageFile != null)
+        {
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
 
+            string fileName = Guid.NewGuid().ToString() + user.ImageFile.FileName;
+
+            string path = Path.Combine(wwwRootPath + "/Images/" + fileName);
+
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await user.ImageFile.CopyToAsync(fileStream);
+            }
+
+            user.ImagePath = fileName;
+        }
         if (existingUser == null)
         {
             return NotFound();
@@ -99,20 +116,20 @@ public class UserProfileController : Controller
         }
 
         // Handle the file upload for ImageFile
-        if (user.ImageFile != null)
-        {
-            var fileName = Path.GetFileName(user.ImageFile.FileName);
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                await user.ImageFile.CopyToAsync(fileStream);
-            }
-            user.ImagePath = "/images/" + fileName;
-        }
-        else
-        {
-            user.ImagePath = existingUser.ImagePath;
-        }
+        /*  if (user.ImageFile != null)
+          {
+              var fileName = Path.GetFileName(user.ImageFile.FileName);
+              var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+              using (var fileStream = new FileStream(filePath, FileMode.Create))
+              {
+                  await user.ImageFile.CopyToAsync(fileStream);
+              }
+              user.ImagePath = "/images/" + fileName;
+          }
+          else
+          {
+              user.ImagePath = existingUser.ImagePath;
+          }*/
 
         try
         {

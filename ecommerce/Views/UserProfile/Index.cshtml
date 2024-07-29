@@ -6,27 +6,21 @@
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-@*                 <form  asp-action="Edit" asp-controller="UserProfile" method="post"  enctype="multipart/form-data" >
- *@              
-                    <img class="rounded-circle mt-5" width="150px" src="@Url.Content("~/images/" + Model.ImagePath)">
-                    <div class="form-group" hidden>
-                        <label asp-for="ImagePath" class="control-label"></label>
-                        <input asp-for="ImagePath" class="form-control" />
-                        <span asp-validation-for="ImagePath" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ImageFile" class="control-label"></label>
-                        <input onchange=" asp-action="Edit" asp-controller="UserProfile" asp-for="ImageFile" class="form-control" />
-                        <span asp-validation-for="ImageFile" class="text-danger"></span>
-                    </div
-                    
-                
+
+                <img class="rounded-circle mt-5" width="150" src="@Url.Content("~/images/" + Model.ImagePath)">
+                <div class="form-group" hidden>
+                    <label asp-for="ImagePath" class="control-label"></label>
+                    <input asp-for="ImagePath" class="form-control" />
+                    <span asp-validation-for="ImagePath" class="text-danger"></span>
+                </div>
+
+
             </div>
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile Settings</h4>
+                    <h4 class="text-right" style="font-weight:bold;">Profile Settings</h4>
                 </div>
 
                 <form asp-action="Edit" asp-controller="UserProfile" method="post" enctype="multipart/form-data">
@@ -57,8 +51,13 @@
 
                         <div class="col-md-12">
                             <label asp-for="Birthday" class="control-label">Birthday</label>
-                            <input asp-for="Birthday" class="form-control" />
+                            <input asp-for="Birthday" type="date" class="form-control" />
                             <span asp-validation-for="Birthday" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12" hidden>
+                            <label asp-for="ImagePath" class="labels">Profile Picture</label>
+                            <input asp-for="ImagePath" type="file" class="form-control" />
+                            <span asp-validation-for="ImagePath" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-12">
