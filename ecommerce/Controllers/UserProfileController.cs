@@ -39,7 +39,7 @@ public class UserProfileController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-  
+
     public async Task<IActionResult> Edit([Bind("Id,Username,Email,FullName,ImagePath,RoleId,Birthday,ImageFile,phoneNumber,Location")] User user, string newPassword)
     {
         int? userId = HttpContext.Session.GetInt32("userId");
@@ -116,6 +116,7 @@ public class UserProfileController : Controller
         }
 
         // Handle the file upload for ImageFile
+<<<<<<< HEAD
       /*  if (user.ImageFile != null)
         {
             var fileName = Path.GetFileName(user.ImageFile.FileName);
@@ -130,6 +131,22 @@ public class UserProfileController : Controller
         {
             user.ImagePath = existingUser.ImagePath;
         }*/
+=======
+        /*  if (user.ImageFile != null)
+          {
+              var fileName = Path.GetFileName(user.ImageFile.FileName);
+              var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+              using (var fileStream = new FileStream(filePath, FileMode.Create))
+              {
+                  await user.ImageFile.CopyToAsync(fileStream);
+              }
+              user.ImagePath = "/images/" + fileName;
+          }
+          else
+          {
+              user.ImagePath = existingUser.ImagePath;
+          }*/
+>>>>>>> d6861a04070a1536ec59cadbd66577a17d9fa525
 
         try
         {
