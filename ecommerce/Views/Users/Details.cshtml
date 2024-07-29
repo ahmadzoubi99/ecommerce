@@ -1,16 +1,16 @@
 ﻿@model ecommerce.Models.User
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
     Layout = "AdminLayout";
 }
 
 <div class="container mt-4">
-    <h1 class="mb-4">Delete User</h1>
+    <h1>User Details</h1>
 
     <div class="card">
-        <div class="card-header bg-danger text-white">
-            <h4 class="mb-0">Are you sure you want to delete this user?</h4>
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">User Information</h4>
         </div>
         <div class="card-body">
             <dl class="row">
@@ -48,11 +48,7 @@
         </div>
     </div>
 
-    <div class="mt-4 d-flex justify-content-between">
-        <form asp-action="Delete">
-            <input type="hidden" asp-for="Id" />
-            <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
+    <div class="mt-4">
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </div>
