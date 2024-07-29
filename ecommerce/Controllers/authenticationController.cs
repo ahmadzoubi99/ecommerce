@@ -28,7 +28,7 @@ namespace Ecommerce.Controllers
             {
                 HttpContext.Session.SetInt32("userId", existingUser.Id);
                 HttpContext.Session.SetString("name", existingUser.FullName);
-                HttpContext.Session.SetString("ImageUser", existingUser.ImagePath);
+                HttpContext.Session.SetString("image", existingUser.ImagePath);
 
                 int x =Convert.ToInt32(HttpContext.Session.GetInt32("userId"));
                 switch (existingUser.RoleId)
@@ -83,7 +83,7 @@ namespace Ecommerce.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "authentication");
         }
 
 

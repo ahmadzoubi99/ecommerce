@@ -22,6 +22,11 @@ namespace ecommerce.Controllers
 			var categories = myContext.Categories.ToList();
 			var testimonials = myContext.Testimonials.Include(u => u.User).Where(t => t.Status == "Approved").ToList();
 			var model3 = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>, IEnumerable<Testimonial>>(categories, products,testimonials);
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Logout="Logout";
+			}
+			
 			return View("Index", model3);
 		}
 

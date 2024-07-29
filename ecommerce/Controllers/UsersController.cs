@@ -28,6 +28,9 @@ namespace ecommerce.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             var myContext = _context.Users.Include(u => u.Role);
             return View(await myContext.ToListAsync());
         }
@@ -54,6 +57,9 @@ namespace ecommerce.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id");
             return View();
         }

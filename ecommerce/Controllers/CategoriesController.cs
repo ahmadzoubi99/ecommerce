@@ -22,7 +22,10 @@ namespace ecommerce.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-              return _context.Categories != null ? 
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
+            return _context.Categories != null ? 
                           View(await _context.Categories.ToListAsync()) :
                           Problem("Entity set 'MyContext.Categories'  is null.");
         }
@@ -30,6 +33,9 @@ namespace ecommerce.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             if (id == null || _context.Categories == null)
             {
                 return NotFound();
@@ -48,6 +54,8 @@ namespace ecommerce.Controllers
         // GET: Categories/Create
         public IActionResult Create()
         {
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             return View();
         }
 
@@ -69,6 +77,9 @@ namespace ecommerce.Controllers
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             if (id == null || _context.Categories == null)
             {
                 return NotFound();
@@ -139,6 +150,9 @@ namespace ecommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             if (_context.Categories == null)
             {
                 return Problem("Entity set 'MyContext.Categories'  is null.");

@@ -23,12 +23,14 @@
                     <table class="table table-bordered table-striped">
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">User</th>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">User name</th>
                                 <th scope="col">Total Amount</th>
-                                <th scope="col">Created At</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">Date Order</th>
+@*                                 <th scope="col">Status</th>
+
+                                *@
+                                <th scope="col">invoice</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,14 +38,13 @@
                             {
                                 <tr>
                                     <th scope="row">@item.Id</th>
-                                    <td>@(item.User?.Id.ToString() ?? "N/A")</td>
+                                    <td>@(item.User?.FullName.ToString() ?? "N/A")</td>
                                     <td>@(item.TotalAmount.ToString("C") ?? "N/A")</td>
                                     <td>@(item.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss") ?? "N/A")</td>
-                                    <td>@(item.Status ?? "N/A")</td>
+@*                                     <td>@(item.Status ?? "N/A")</td>
+                                *@
                                     <td>
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Edit</a>
-                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">Details</a>
-                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                                        @Html.ActionLink("View invoice", "ItemInOrder", "Orders", new { id = item.Id }, null)
                                     </td>
                                 </tr>
                             }
