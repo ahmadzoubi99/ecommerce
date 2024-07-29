@@ -6,8 +6,8 @@
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <form  asp-action="Edit" asp-controller="UserProfile" method="post"  enctype="multipart/form-data" >
-              
+@*                 <form  asp-action="Edit" asp-controller="UserProfile" method="post"  enctype="multipart/form-data" >
+ *@              
                     <img class="rounded-circle mt-5" width="150px" src="@Url.Content("~/images/" + Model.ImagePath)">
                     <div class="form-group" hidden>
                         <label asp-for="ImagePath" class="control-label"></label>
@@ -20,7 +20,6 @@
                         <span asp-validation-for="ImageFile" class="text-danger"></span>
                     </div
                     
-                </form>
                 
             </div>
         </div>
