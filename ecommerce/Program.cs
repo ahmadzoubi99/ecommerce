@@ -3,6 +3,8 @@ using Ecommerce.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Ecommerce
 {
@@ -31,6 +33,7 @@ namespace Ecommerce
             // Register application services
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<ICartService, CartService>();
+            builder.Services.AddTransient<EmailService>(); // Register EmailService
 
             var app = builder.Build();
 
