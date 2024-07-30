@@ -162,8 +162,49 @@ namespace ecommerce.Controllers
         {
           return (_context.Orders?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        public async Task<IActionResult> invoice(int? id)
+        {
+            if (id == null || _context.OrderItems == null)
+            {
+                return NotFound();
+            }
 
-     
-    
-}
+            var orderItem = await _context.OrderItems
+                .Include(o => o.Order)
+                .Include(o => o.Product)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (orderItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(orderItem);
+        }
+        public async Task<IActionResult> ItemInOrder(int id)
+        {
+            var myContext = _context.OrderItems.Include(o => o.Order).Include(o => o.Product).Where(p => p.OrderId == id);
+            var orderById= _context.Orders.Where(p=>p.Id==id).FirstOrDefault();
+            ViewBag.totalAmount = orderById.TotalAmount;
+            ViewBag.OrderDate = orderById.CreatedAt;
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
+            return View(await myContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> SearchByOrderId(int? id)
+        {
+            var order = _context.Orders.AsQueryable();
+
+            if (id!=null)
+            {
+                order = order.Where(u => u.Id==id);
+            }
+
+            var orrdrs = await order.ToListAsync();
+
+
+            return View("Index", orrdrs);
+        }
+    }
 }

@@ -5,6 +5,14 @@
 }
 <link href="~/css/shop.css" rel="stylesheet" />
 
+ <style>
+    .before-footer-section {
+        padding: 0rem 0 12rem 0 !important;
+    }
+
+ </style>
+ <link href="~/HomeAssets/css/style.css" />
+
 <!-- Start Hero Section -->
 <div class="hero" id="ShopID">
     <div class="container">
@@ -31,9 +39,11 @@
 <div class="container">
     <ul class="nav nav-tabs d-flex justify-content-center" id="productTabs" role="tablist" data-aos="fade-up" data-aos-delay="100">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="starters-tab" data-bs-toggle="tab" href="#menu-starters" role="tab" aria-controls="menu-starters" aria-selected="true">
-                <h4>All</h4>
-            </a>
+            <form asp-controller="Home" asp-action="AllProduct" method="post">
+                <button class="nav-link active" id="starters-tab" data-bs-toggle="tab" href="#menu-starters" role="tab" aria-controls="menu-starters" aria-selected="true">
+                    <h4>All</h4>
+                </button>
+            </form>
         </li>
 
 @foreach (var item in Model.Item1)
@@ -61,9 +71,12 @@
             @foreach (var item in Model.Item2)
             {
                 <div class="col-12 col-md-4 col-lg-3 mb-5">
-                    <a class="product-item">
-                        <img src="@Url.Content("~/images/" + item.Image)" class="img-fluid product-thumbnail" alt="Product Image">
+                    <a class="product-item" asp-action="productsIndetails" asp-controller="Home" asp-route-id="@item.Id">
+                        
+                            <img src="@Url.Content("~/images/" + item.Image)" class="img-fluid product-thumbnail" alt="Product Image">
+                        
                         <h3 class="product-title">@item.Name</h3>
+                       
                         @if (item.DiscountValue > 0)
                         {
                             <p>

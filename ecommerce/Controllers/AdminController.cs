@@ -14,12 +14,24 @@ namespace Ecommerce.Controllers
         }
         public IActionResult Index()
         {
-           ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
 
-            ViewBag.ImageUser= HttpContext.Session.GetInt32("ImageUser");
+            // Calculate the total sales for all time
+            var totalSale = _context.Orders.Sum(p => p.TotalAmount);
+            ViewBag.totalSale = totalSale;
 
-            var totalSale=_context.Orders.Sum(p=>p.TotalAmount);
-            ViewBag.totalSale= totalSale;
+			ViewBag.productsCount = _context.Products.Count();
+			ViewBag.userCount= _context.Users.Count();
+             
+            // Calculate the total sales for the last day
+            var yesterday = DateTime.Now.Date.AddDays(-1);
+            var today = DateTime.Now.Date;
+            var lastDaySales = _context.Orders
+                                       .Where(p => p.CreatedAt >= yesterday && p.CreatedAt < today)
+                                       .Sum(p => (decimal?)p.TotalAmount) ?? 0;
+            ViewBag.lastDaySales = lastDaySales;
+
             return View();
         }
         public async Task<IActionResult> Product()

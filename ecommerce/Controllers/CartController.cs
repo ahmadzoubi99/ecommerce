@@ -14,6 +14,7 @@ namespace ecommerce.Controllers
         private readonly MyContext context;
         public CartController(ICartService cartService, IProductService productService,MyContext context)
         {
+
             this.context=context;
             _cartService = cartService;
             _productService = productService;
@@ -30,7 +31,13 @@ namespace ecommerce.Controllers
 			HttpContext.Session.SetInt32("countOfItem", countOfItem);
 			HttpContext.Session.SetString("totalAmount", totalAmount.ToString());
             ViewBag.totalAmount = totalAmount;
-            return View(cart);
+
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Login = "Login";
+			}
+
+			return View(cart);
         }
 
 
@@ -39,14 +46,17 @@ namespace ecommerce.Controllers
         public IActionResult Checkout()
         {
             int id = Convert.ToInt32(HttpContext.Session.GetInt32("userId"));
-            if (id == null)
+		
+			if (id == null)
             {
                 RedirectToAction("Login", "Authentication");
             }
-            else 
-            {   
-            }
-            return View();
+            else
+			{
+				ViewBag.Login = "Login";
+
+			}
+			return View();
 		}
 
 		[HttpPost]
@@ -153,6 +163,7 @@ namespace ecommerce.Controllers
 				return BadRequest("Invalid bank details.");
 			}
 
+
 			// Validate the bank details
 			var accountInBank = await context.Banks
 				.Where(b => b.CVV == bank.CVV
@@ -227,8 +238,11 @@ namespace ecommerce.Controllers
 
         public IActionResult SuccessfulPayment()
         {
-        
-            return View();
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Login = "Login";
+			}
+			return View();
         }
 
 

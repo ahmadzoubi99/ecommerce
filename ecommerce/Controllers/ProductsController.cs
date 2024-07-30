@@ -25,6 +25,9 @@ namespace ecommerce.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             var myContext = _context.Products.Include(p => p.Category);
             return View(await myContext.ToListAsync());
         }
@@ -32,6 +35,9 @@ namespace ecommerce.Controllers
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             if (id == null || _context.Products == null)
             {
                 return NotFound();
@@ -51,6 +57,9 @@ namespace ecommerce.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
             return View();
         }
@@ -90,6 +99,9 @@ namespace ecommerce.Controllers
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             if (id == null || _context.Products == null)
             {
                 return NotFound();
@@ -156,6 +168,9 @@ namespace ecommerce.Controllers
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             if (id == null || _context.Products == null)
             {
                 return NotFound();
@@ -211,6 +226,9 @@ namespace ecommerce.Controllers
 
             return View("Index", products);
         }
+        
+
+
     }
 
 

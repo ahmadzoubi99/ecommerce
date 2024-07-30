@@ -28,6 +28,9 @@ namespace ecommerce.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             var myContext = _context.Users.Include(u => u.Role);
             return View(await myContext.ToListAsync());
         }
@@ -54,6 +57,9 @@ namespace ecommerce.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id");
             return View();
         }
@@ -199,5 +205,21 @@ namespace ecommerce.Controllers
         {
           return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+		public async Task<IActionResult> SearchByUserName(string? name)
+		{
+			var user = _context.Users.Include(r=>r.Role).AsQueryable();
+
+			if (!string.IsNullOrEmpty(name))
+			{
+				user = user.Where(u => u.FullName.Contains(name));
+			}
+
+			var users = await user.ToListAsync();
+
+
+			return View("Index", users);
+		}
+
+   
     }
 }

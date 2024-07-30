@@ -26,6 +26,7 @@ namespace ecommerce.Controllers
         // GET: OrderItems
         public async Task<IActionResult> Index()
         {
+
             var myContext = _context.OrderItems.Include(o => o.Order).Include(o => o.Product);
             return View(await myContext.ToListAsync());
         }
@@ -172,5 +173,14 @@ namespace ecommerce.Controllers
         {
           return (_context.OrderItems?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        public async Task<IActionResult> ItemInOrder(int id)
+        {
+
+            var myContext = _context.OrderItems.Include(o => o.Order).Include(o => o.Product).Where(p => p.OrderId == id);
+            return View(await myContext.ToListAsync());
+        }
+
+
     }
 }

@@ -22,6 +22,8 @@ namespace ecommerce.Controllers
         // GET: Testimonials
         public async Task<IActionResult> Index()
         {
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             var myContext = _context.Testimonials.Include(t => t.User);
             return View(await myContext.ToListAsync());
         }
@@ -59,10 +61,10 @@ namespace ecommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserId,Content,Status")] Testimonial testimonial)
         {
-             _context.Add(testimonial);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            
+            _context.Add(testimonial);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", testimonial.UserId);
             return View(testimonial);
         }
@@ -96,22 +98,22 @@ namespace ecommerce.Controllers
                 return NotFound();
             }
 
-               try
+            try
+            {
+                _context.Update(testimonial);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TestimonialExists(testimonial.Id))
                 {
-                    _context.Update(testimonial);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!TestimonialExists(testimonial.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                
+                    throw;
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", testimonial.UserId);
@@ -151,14 +153,14 @@ namespace ecommerce.Controllers
             {
                 _context.Testimonials.Remove(testimonial);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TestimonialExists(int id)
         {
-          return (_context.Testimonials?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Testimonials?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
 
@@ -170,58 +172,68 @@ namespace ecommerce.Controllers
             {
                 return NotFound();
             }
-                try
+            try
+            {
+                testimonial.Status = "Approved";
+                _context.Update(testimonial);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TestimonialExists(testimonial.Id))
                 {
-                    testimonial.Status = "Approved";
-                    _context.Update(testimonial);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!TestimonialExists(testimonial.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
-                return RedirectToAction(nameof(Index));
-            
+            }
+            return RedirectToAction(nameof(Index));
+
             ViewData["UserAccountId"] = new SelectList(_context.Users, "Id", "Id", testimonial.UserId);
             return View(testimonial);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Reject(decimal id, [Bind("Id,UserId,Content,Status")]Testimonial testimonial)
+        public async Task<IActionResult> Reject(decimal id, [Bind("Id,UserId,Content,Status")] Testimonial testimonial)
         {
             if (id != testimonial.Id)
             {
                 return NotFound();
             }
-                try
+            try
+            {
+                testimonial.Status = "Reject";
+                _context.Update(testimonial);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TestimonialExists(testimonial.Id))
                 {
-                    testimonial.Status = "Reject";
-                    _context.Update(testimonial);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!TestimonialExists(testimonial.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
-                return RedirectToAction(nameof(Index));
-            
+            }
+            return RedirectToAction(nameof(Index));
+
             ViewData["UserAccountId"] = new SelectList(_context.Users, "Id", "Id", testimonial.UserId);
             return View(testimonial);
+        }
+        [HttpPost]
+        public async Task<IActionResult> SearchByTestimonialsStatues(string status)
+        {
+            var testimonials = await _context.Testimonials
+                .Include(t => t.User)
+                .Where(t => t.Status == status)
+                .ToListAsync();
+            ViewBag.SearchStatus = status;
+            return View("Index", testimonials);
         }
     }
 }
