@@ -59,15 +59,29 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a asp-action="Index" asp-controller="Admin" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a asp-action="Index" asp-controller="Categories" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Categories</a>
-                    <a asp-action="Index" asp-controller="Products" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Products</a>
-                    <a asp-action="Index" asp-controller="Orders" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Orders</a>
-                    <a asp-action="Index" asp-controller="Users" asp-controller" class="nav-item nav-link"><i class="fa fa-table me-2"></i>User</a>
-                    <a asp-action="Index" asp-controller="Testimonials" asp-controller" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Testimonials</a>
-                    <a asp-action="Index" asp-controller="ContactUs" asp-controller" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Contact Us</a>
-
+                    <a asp-action="Index" asp-controller="Admin" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Admin" ? "active" : "")">
+                        <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                    <a asp-action="Index" asp-controller="Categories" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Categories" ? "active" : "")">
+                        <i class="fa fa-th me-2"></i>Categories
+                    </a>
+                    <a asp-action="Index" asp-controller="Products" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Products" ? "active" : "")">
+                        <i class="fa fa-th me-2"></i>Products
+                    </a>
+                    <a asp-action="Index" asp-controller="Orders" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Orders" ? "active" : "")">
+                        <i class="fa fa-keyboard me-2"></i>Orders
+                    </a>
+                    <a asp-action="Index" asp-controller="Users" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Users" ? "active" : "")">
+                        <i class="fa fa-table me-2"></i>User
+                    </a>
+                    <a asp-action="Index" asp-controller="Testimonials" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Testimonials" ? "active" : "")">
+                        <i class="fa fa-table me-2"></i>Testimonials
+                    </a>
+                    <a asp-action="Index" asp-controller="ContactUs" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "ContactUs" ? "active" : "")">
+                        <i class="fa fa-table me-2"></i>Contact Us
+                    </a>
                 </div>
+
             </nav>
         </div>
         <!-- Sidebar End -->

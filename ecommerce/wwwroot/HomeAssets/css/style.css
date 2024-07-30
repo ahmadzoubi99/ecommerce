@@ -9,6 +9,42 @@ body {
   overflow-x: hidden;
   position: relative; }
 
+/*-----------------------------Shop-------------------------------
+*/
+
+
+#ShopID {
+    height: auto; 
+    padding: 20px 0; 
+}
+
+
+#ShopHeader {
+    margin-top: -5%; 
+    
+}
+
+
+#ShopPara {
+    font-size: 18px; 
+    max-width: 1000px; 
+    font-weight: bold;
+}
+
+
+
+@media (min-width: 768px) {
+    #ShopHeader {
+        font-size: 42px;
+    }
+
+    #ShopPara {
+        font-size: 18px;
+        max-width: 800px;
+    }
+}
+
+/*----------------------------------shope---------------*/
 .circle {
     display: inline-block;
     width: 30px; /* Adjust size as needed */
@@ -109,15 +145,20 @@ a {
 .hero {
   background: #3b5d50;
   padding: calc(4rem - 30px) 0 0rem 0; }
+
+
+
   @media (min-width: 768px) {
     .hero {
       padding: calc(4rem - 30px) 0 4rem 0; } }
   @media (min-width: 992px) {
     .hero {
       padding: calc(8rem - 30px) 0 8rem 0; } }
+
   .hero .intro-excerpt {
     position: relative;
     z-index: 4; }
+
     @media (min-width: 992px) {
       .hero .intro-excerpt {
         max-width: 450px; } }

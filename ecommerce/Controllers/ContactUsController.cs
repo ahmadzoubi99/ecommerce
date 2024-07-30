@@ -59,11 +59,11 @@ namespace ecommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Email,Subject,Message,UserId")] ContactUs contactUs)
         {
-           
-                _context.Add(contactUs);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            
+
+            _context.Add(contactUs);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", contactUs.UserId);
             return View(contactUs);
         }
@@ -97,23 +97,23 @@ namespace ecommerce.Controllers
                 return NotFound();
             }
 
-            
-                try
+
+            try
+            {
+                _context.Update(contactUs);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ContactUsExists(contactUs.Id))
                 {
-                    _context.Update(contactUs);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!ContactUsExists(contactUs.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                
+                    throw;
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", contactUs.UserId);
@@ -153,14 +153,15 @@ namespace ecommerce.Controllers
             {
                 _context.ContactUsMessages.Remove(contactUs);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ContactUsExists(int id)
         {
-          return (_context.ContactUsMessages?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.ContactUsMessages?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
+
