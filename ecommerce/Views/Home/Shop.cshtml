@@ -59,9 +59,12 @@
             @foreach (var item in Model.Item2)
             {
                 <div class="col-12 col-md-4 col-lg-3 mb-5">
-                    <a class="product-item">
-                        <img src="@Url.Content("~/images/" + item.Image)" class="img-fluid product-thumbnail" alt="Product Image">
+                    <a class="product-item" asp-action="productsIndetails" asp-controller="Home" asp-route-id="@item.Id">
+                        
+                            <img src="@Url.Content("~/images/" + item.Image)" class="img-fluid product-thumbnail" alt="Product Image">
+                        
                         <h3 class="product-title">@item.Name</h3>
+                       
                         @if (item.DiscountValue > 0)
                         {
                             <p>

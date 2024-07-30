@@ -199,5 +199,15 @@ namespace ecommerce.Controllers
         }
 
 
+        public IActionResult productsIndetails(int id)
+        {  if (HttpContext.Session.GetInt32("userId") != null)
+            {
+                ViewBag.Login = "Login";
+            }
+
+			var product = myContext.Products.Include(p=>p.Category).Where(p=>p.Id == id).FirstOrDefault();
+            return View(product);
+		 }
+
     }
 }
