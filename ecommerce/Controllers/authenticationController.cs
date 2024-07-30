@@ -51,13 +51,16 @@ namespace Ecommerce.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register
-            ([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday")] User user)
+            ([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday,Location,phoneNumber")] User user)
         {
+            user.Username = user.Username;
             user.Email= user.Email;
             user.ImagePath = "";
             user.FullName=user.Username;
             user.PasswordHash = user.PasswordHash;
             user.Birthday= user.Birthday;
+            user.Location = user.Location;
+            user.phoneNumber = user.phoneNumber;
             user.RoleId = 2;
             var existingUser = _context.Users
                 .Where(u => u.Email == user.Email)
