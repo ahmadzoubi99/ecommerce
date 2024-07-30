@@ -7,20 +7,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Icart\**" />
+    <Compile Remove="NewFolder\**" />
+    <Content Remove="Icart\**" />
+    <Content Remove="NewFolder\**" />
+    <EmbeddedResource Remove="Icart\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="Icart\**" />
+    <None Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\images\cartimage.PNG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.7.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.32" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.32" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.32">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.17" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SweetAlert" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Icart\" />
-    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

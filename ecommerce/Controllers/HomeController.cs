@@ -3,6 +3,8 @@ using Ecommerce.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Mail;
+using System.Net;
 
 namespace ecommerce.Controllers
 {
@@ -16,22 +18,22 @@ namespace ecommerce.Controllers
 		}
 
 
-        public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index()
 		{
 			var products = myContext.Products.Include(c => c.Category).ToList();
 			var categories = myContext.Categories.ToList();
 			var testimonials = myContext.Testimonials.Include(u => u.User).Where(t => t.Status == "Approved").ToList();
-			var model3 = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>, IEnumerable<Testimonial>>(categories, products,testimonials);
+			var model3 = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>, IEnumerable<Testimonial>>(categories, products, testimonials);
 			return View("Index", model3);
 		}
 
 
 		public async Task<IActionResult> Shop()
 		{
-			var count= HttpContext.Session.GetInt32("countOfItem");
-            ViewBag.Count =HttpContext.Session.GetInt32("countOfItem");
+			var count = HttpContext.Session.GetInt32("countOfItem");
+			ViewBag.Count = HttpContext.Session.GetInt32("countOfItem");
 
-            var products = myContext.Products.ToList();
+			var products = myContext.Products.ToList();
 			var categories = myContext.Categories.ToList();
 
 			var model3 = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
@@ -66,22 +68,22 @@ namespace ecommerce.Controllers
 			return View("Shop", model);
 		}
 		[HttpPost]
-        //public async Task<IActionResult> ProductByCategorie(int categoryId)
-        //{
-        //	var products = await myContext.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
-        //	var categories = await myContext.Categories.ToListAsync();
+		//public async Task<IActionResult> ProductByCategorie(int categoryId)
+		//{
+		//	var products = await myContext.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
+		//	var categories = await myContext.Categories.ToListAsync();
 
-        //	var model = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
+		//	var model = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
 
-        //	return View("Shop", model);
-        //}
-/*        [HttpPost]
-		public async Task<IActionResult> ProductByCategorie(int categoryId)
-		{
-			var products = await myContext.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
-			return PartialView("_ProductListPartial", products);
-		}
-*/
+		//	return View("Shop", model);
+		//}
+		/*        [HttpPost]
+				public async Task<IActionResult> ProductByCategorie(int categoryId)
+				{
+					var products = await myContext.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
+					return PartialView("_ProductListPartial", products);
+				}
+		*/
 
 		public async Task<IActionResult> ProductByCategorie(int id)
 		{
@@ -99,21 +101,50 @@ namespace ecommerce.Controllers
 		}
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ContactUs([Bind("Id,Name,Email,Subject,Message,UserId")] ContactUs contactUs)
-        {
-			contactUs.Subject = "";
-            contactUs.UserId = HttpContext.Session.GetInt32("userId");
-            myContext.Add(contactUs);
-            await myContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult ContactUs(ContactUs model)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					// Email settings
+					var senderEmail = "wesalmazen4@gmail.com"; // Replace with your email
+					var senderPassword = "wesal30420000"; // Use a secure method to store your password
 
-            ViewData["UserId"] = new SelectList(myContext.Users, "Id", "Id", contactUs.UserId);
-            return View(contactUs);
-        }
-        
-        public IActionResult AboutUs()
+					// Compose the email
+					var mailMessage = new MailMessage
+					{
+						From = new MailAddress(senderEmail),
+						Subject = "Contact Us Message",
+						Body = $"Name: {model.Name}\nEmail: {model.Email}\nMessage: {model.Message}",
+						IsBodyHtml = false
+					};
+
+					mailMessage.To.Add(senderEmail);
+
+					// SMTP client settings
+					using (var smtpClient = new SmtpClient("smtp.gmail.com", 587))
+					{
+						smtpClient.Credentials = new NetworkCredential(senderEmail, senderPassword);
+						smtpClient.EnableSsl = true;
+						smtpClient.Send(mailMessage);
+					}
+
+					ViewBag.Message = "Mail has been sent successfully";
+				}
+				catch (Exception ex)
+				{
+					// Log the exception details
+					Console.WriteLine($"Exception: {ex.Message}"); // For debugging, log this to your file or logging system
+					ViewBag.Message = "Error while sending email. Please try again later.";
+				}
+			}
+			return View(model);
+		}
+
+		public IActionResult AboutUs()
 		{
 			return View();
 		}

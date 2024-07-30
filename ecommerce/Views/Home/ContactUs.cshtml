@@ -78,26 +78,30 @@
                     </div>
 
                     <form method="post" asp-action="ContactUs">
-               
-
                         <div class="form-group">
                             <label asp-for="Name" class="text-black" for="fname">Full Name</label>
                             <input asp-for="Name" type="text" class="form-control" id="fname">
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
                             <label asp-for="Email" class="text-black" for="email">Email</label>
                             <input asp-for="Email" type="email" class="form-control" id="email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                       
+
                         <div class="form-group mb-5">
                             <label asp-for="Message" class="text-black" for="message">Message</label>
                             <textarea asp-for="Message" class="form-control" id="message" cols="30" rows="5"></textarea>
+                            <span asp-validation-for="Message" class="text-danger"></span>
                         </div>
 
                         <button type="submit" class="btn btn-primary-hover-outline">Send Message</button>
                     </form>
+
+                 
 
                 </div>
 
