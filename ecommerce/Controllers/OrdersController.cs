@@ -192,6 +192,19 @@ namespace ecommerce.Controllers
             return View(await myContext.ToListAsync());
         }
 
+        public async Task<IActionResult> SearchByOrderId(int? id)
+        {
+            var order = _context.Orders.AsQueryable();
 
+            if (id!=null)
+            {
+                order = order.Where(u => u.Id==id);
+            }
+
+            var orrdrs = await order.ToListAsync();
+
+
+            return View("Index", orrdrs);
+        }
     }
 }

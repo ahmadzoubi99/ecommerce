@@ -24,7 +24,7 @@ namespace ecommerce.Controllers
 			var model3 = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>, IEnumerable<Testimonial>>(categories, products,testimonials);
 			if (HttpContext.Session.GetInt32("userId") != null)
 			{
-				ViewBag.Logout="Logout";
+				ViewBag.Login="Login";
 			}
 			
 			return View("Index", model3);
@@ -38,6 +38,10 @@ namespace ecommerce.Controllers
 
             var products = myContext.Products.ToList();
 			var categories = myContext.Categories.ToList();
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Login = "Login";
+			}
 
 			var model3 = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
 
@@ -100,6 +104,10 @@ namespace ecommerce.Controllers
 
 		public IActionResult ContactUs()
 		{
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Login = "Login";
+			}
 			return View();
 		}
 
@@ -109,7 +117,11 @@ namespace ecommerce.Controllers
         public async Task<IActionResult> ContactUs([Bind("Id,Name,Email,Subject,Message,UserId")] ContactUs contactUs)
         {
 			contactUs.Subject = "";
-            contactUs.UserId = HttpContext.Session.GetInt32("userId");
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Login = "Login";
+			}
+			contactUs.UserId = HttpContext.Session.GetInt32("userId");
             myContext.Add(contactUs);
             await myContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -120,10 +132,18 @@ namespace ecommerce.Controllers
         
         public IActionResult AboutUs()
 		{
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Login = "Login";
+			}
 			return View();
 		}
 		public IActionResult Cart()
 		{
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Login = "Login";
+			}
 			return View();
 		}
 
@@ -136,11 +156,19 @@ namespace ecommerce.Controllers
         // GET: Testimonials/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(myContext.Users, "Id", "Id");
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Login = "Login";
+			}
+			ViewData["UserId"] = new SelectList(myContext.Users, "Id", "Id");
             return View();
         }
 		public IActionResult CTestimonial() 
 		{
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Login = "Login";
+			}
 			return View();
 		}
 
