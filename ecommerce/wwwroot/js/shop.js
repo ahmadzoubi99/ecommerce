@@ -1,5 +1,4 @@
-﻿namespace ecommerce.wwwroot.js
-{
+﻿namespace ecommerce.wwwroot.js {
     document.addEventListener('DOMContentLoaded', function () {
         const navLinks = document.querySelectorAll('.nav-link');
 

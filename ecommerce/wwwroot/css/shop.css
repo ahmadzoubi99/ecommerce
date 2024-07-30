@@ -5,8 +5,12 @@ body {
     color: #333;
 }
 
+.hero {
+    padding: 10px 0;
+    Reduce padding to minimize height
+}
+
 .container {
-    margin-top: 20px;
 }
 
 /* Section Title */
@@ -86,3 +90,11 @@ body {
         font-size: 1rem;
         color: #777;
     }
+
+.custom-img-width {
+    width: 500%; /* Adjust this value to make the image wider than its actual width */
+}
+
+.intro-excerpt h1 {
+    white-space: nowrap; /* Prevent the text from wrapping to the next line */
+}

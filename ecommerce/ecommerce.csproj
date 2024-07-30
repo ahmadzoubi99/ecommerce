@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\HomeAssets\images\duaaproj.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\images\cartimage.PNG.png" />
   </ItemGroup>
 
