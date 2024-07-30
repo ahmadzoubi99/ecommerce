@@ -209,5 +209,17 @@ namespace ecommerce.Controllers
             return View(product);
 		 }
 
+        public async Task<IActionResult> AllProduct()
+        {
+            var products = await myContext.Products.ToListAsync();
+            var categories = await myContext.Categories.ToListAsync();
+
+            var model = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
+
+            return View("Shop", model);
+        }
+
+    
+
     }
 }

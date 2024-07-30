@@ -5,6 +5,14 @@
 }
 <link href="~/css/shop.css" rel="stylesheet" />
 
+ <style>
+    .before-footer-section {
+        padding: 0rem 0 12rem 0 !important;
+    }
+
+ </style>
+ <link href="~/HomeAssets/css/style.css" />
+
 <!-- Start Hero Section -->
 <div class="hero">
     <div class="container">
@@ -29,9 +37,11 @@
 <div class="container">
     <ul class="nav nav-tabs d-flex justify-content-center" id="productTabs" role="tablist" data-aos="fade-up" data-aos-delay="100">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="starters-tab" data-bs-toggle="tab" href="#menu-starters" role="tab" aria-controls="menu-starters" aria-selected="true">
-                <h4>All</h4>
-            </a>
+            <form asp-controller="Home" asp-action="AllProduct" method="post">
+                <button class="nav-link active" id="starters-tab" data-bs-toggle="tab" href="#menu-starters" role="tab" aria-controls="menu-starters" aria-selected="true">
+                    <h4>All</h4>
+                </button>
+            </form>
         </li>
 
 @foreach (var item in Model.Item1)
