@@ -3,49 +3,75 @@
 @{
     ViewData["Title"] = "Edit";
     Layout = "AdminLayout";
-
 }
 
-<h1>Edit</h1>
+<style>
+    .custom-input,
+    .custom-select {
+        border: 1px solid #ced4da; /* Border color for inputs and selects */
+        border-radius: 0.375rem; /* Rounded corners */
+        padding: 0.375rem 0.75rem; /* Padding for inputs and selects */
+    }
 
-<h4>Order</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
+    .custom-input {
+        background-color: #ffffff; /* Background color for input fields */
+    }
+
+    .custom-select {
+        background-color: #ffffff; /* Background color for select dropdowns */
+    }
+</style>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Edit Order</h6>
+                <div>
+                    <h4>Order</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form asp-action="Edit">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Id" />
+                                <div class="form-group mb-3">
+                                    <label asp-for="UserId" class="col-form-label font-weight-bold"></label>
+                                    <select asp-for="UserId" class="custom-select" asp-items="ViewBag.UserId"></select>
+                                    <span asp-validation-for="UserId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="TotalAmount" class="col-form-label font-weight-bold"></label>
+                                    <input asp-for="TotalAmount" class="custom-input form-control" />
+                                    <span asp-validation-for="TotalAmount" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="CreatedAt" class="col-form-label font-weight-bold"></label>
+                                    <input asp-for="CreatedAt" class="custom-input form-control" />
+                                    <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="Status" class="col-form-label font-weight-bold"></label>
+                                    <input asp-for="Status" class="custom-input form-control" />
+                                    <span asp-validation-for="Status" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="TotalAmount" class="control-label"></label>
-                <input asp-for="TotalAmount" class="form-control" />
-                <span asp-validation-for="TotalAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
