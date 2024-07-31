@@ -8,6 +8,11 @@ body {
     padding: 10px 0;  Reduce padding to minimize height 
 }
 
+.hero {
+    padding: 10px 0;
+    Reduce padding to minimize height
+}
+
 .container {
 }
 
@@ -88,8 +93,9 @@ body {
         font-size: 1rem;
         color: #777;
     }
+
 .custom-img-width {
-    width: 500%;/* Adjust this value to make the image wider than its actual width */
+    width: 500%; /* Adjust this value to make the image wider than its actual width */
 }
 
 .intro-excerpt h1 {
