@@ -102,7 +102,16 @@ namespace ecommerce.Controllers
 			return View("Shop", model);
 		}
 
-		public IActionResult ContactUs()
+        public async Task<IActionResult> AllProductInAllCategorie()
+        {
+            var products = await myContext.Products.ToListAsync();
+            var categories = await myContext.Categories.ToListAsync();
+
+            var model = Tuple.Create<IEnumerable<Category>, IEnumerable<Product>>(categories, products);
+
+            return View("Shop", model);
+        }
+        public IActionResult ContactUs()
 		{
 			if (HttpContext.Session.GetInt32("userId") != null)
 			{
@@ -218,6 +227,8 @@ namespace ecommerce.Controllers
 
             return View("Shop", model);
         }
+
+		
 
     
 

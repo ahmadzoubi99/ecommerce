@@ -48,15 +48,23 @@
 					<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
 						<a class="nav-link" asp-action="Index" asp-controller="Home">Home</a>
 					</li>
-					<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "shop" ? "active" : "")">
+					<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "hop" ? "active" : "")">
 						<a class="nav-link" asp-action="shop" asp-controller="Home">Shop</a>
 					</li>
 					<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "AboutUs" ? "active" : "")">
 						<a class="nav-link" asp-action="AboutUs" asp-controller="Home">About Us</a>
 					</li>
-					<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "ContactUs" ? "active" : "")">
-						<a class="nav-link" asp-action="ContactUs" asp-controller="Home">Contact Us</a>
-					</li>
+					@if (@ViewBag.Login != null)
+					{
+						<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "CTestimonial" ? "active" : "")">
+							<a class="nav-link" asp-action="CTestimonial" asp-controller="Home">Testimonial</a>
+						</li>
+						<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "ContactUs" ? "active" : "")">
+							<a class="nav-link" asp-action="ContactUs" asp-controller="Home">Contact Us</a>
+						</li>
+					}
+
+
 				</ul>
 
 
