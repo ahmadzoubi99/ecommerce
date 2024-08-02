@@ -5,9 +5,12 @@ body {
     color: #333;
 }
 .hero {
-    padding: 10px 0;  Reduce padding to minimize height 
+   height:30%
 }
-
+.hero-img-wrap
+{
+    margin-top:-10%
+}
 .container {
 }
 
@@ -88,10 +91,15 @@ body {
         font-size: 1rem;
         color: #777;
     }
+
 .custom-img-width {
-    width: 500%;/* Adjust this value to make the image wider than its actual width */
+    width: 500%; /* Adjust this value to make the image wider than its actual width */
 }
 
 .intro-excerpt h1 {
     white-space: nowrap; /* Prevent the text from wrapping to the next line */
+}
+.text-center
+{
+    margin-top:5%;
 }

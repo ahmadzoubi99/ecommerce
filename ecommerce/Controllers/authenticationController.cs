@@ -2,6 +2,7 @@
 using Ecommerce.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Controllers
 {
@@ -22,12 +23,14 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday")] User user)
         {
-            var existingUser = _context.Users.Where(u => u.Email == user.Email && u.PasswordHash == user.PasswordHash).FirstOrDefault();
+            var existingUser = _context.Users.Where(u => u.Email == user.Email && u.PasswordHash == user.PasswordHash).Include(p=>p.Role).FirstOrDefault();
 
             if (existingUser != null)
             {
                 HttpContext.Session.SetInt32("userId", existingUser.Id);
-                HttpContext.Session.SetString("name", existingUser.FullName);
+				HttpContext.Session.SetInt32("RoleId", existingUser.Role.Id);
+
+				HttpContext.Session.SetString("name", existingUser.FullName);
                 HttpContext.Session.SetString("image", existingUser.ImagePath);
 
                 int x =Convert.ToInt32(HttpContext.Session.GetInt32("userId"));
