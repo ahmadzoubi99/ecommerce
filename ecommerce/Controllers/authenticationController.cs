@@ -23,7 +23,9 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday")] User user)
         {
-            var existingUser = _context.Users.Where(u => u.Email == user.Email && u.PasswordHash == user.PasswordHash).Include(p=>p.Role).FirstOrDefault();
+            
+			var existingUser = _context.Users.Where(u => u.Email == user.Email && u.PasswordHash == user.PasswordHash).
+                Include(p=>p.Role).FirstOrDefault();
 
             if (existingUser != null)
             {
@@ -55,31 +57,46 @@ namespace Ecommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday,Location,phoneNumber")] User user)
         {
-            if (string.IsNullOrWhiteSpace(user.Username) || string.IsNullOrWhiteSpace(user.Email) || string.IsNullOrWhiteSpace(user.PasswordHash))
+            if (string.IsNullOrEmpty(user.Username))
             {
-                TempData["ErrorMessage"] = "Please fill in all the required fields.";
-                return RedirectToAction("Register");
+                ViewBag.RegisterError = "Enter your username";
+                return View("Login", user);
+            }
+            if (string.IsNullOrEmpty(user.PasswordHash))
+            {
+                ViewBag.RegisterError = "Enter your password";
+                return View("Login", user);
+            }
+            if (string.IsNullOrEmpty(user.Email))
+            {
+                ViewBag.RegisterError = "Enter your email";
+                return View("Login", user);
+            }
+            if (user.Birthday == null)
+            {
+                ViewBag.RegisterError = "Enter your birthday";
+                return View("Login", user);
             }
 
-            user.ImagePath = "";
-            user.FullName = user.Username;
-            user.RoleId = 2;
             var existingUser = _context.Users.FirstOrDefault(u => u.Email == user.Email);
 
             if (existingUser != null)
             {
-                TempData["RegisterError"] = "Email is already used.";
-                return RedirectToAction("Register");
+                ViewBag.RegisterError = "Email is already used";
+                return View("Login", user);
             }
-
-            _context.Add(user);
-            await _context.SaveChangesAsync();
-
-            TempData["SuccessMessage"] = "Registration successful!";
-            return RedirectToAction("Login");
+            else
+            {
+                user.RoleId = 2;
+                user.FullName = user.Username;
+                user.ImagePath = " ";
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                ViewBag.Success = true;
+                ViewBag.Message = "Registration Successful!";
+                return View("Login");
+            }
         }
-
-
 
 
         public IActionResult Logout()

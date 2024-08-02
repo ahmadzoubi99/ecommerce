@@ -4,9 +4,14 @@
     ViewData["Title"] = "Login";
     Layout = null;
 }
+@{
+    bool isSuccess = ViewBag.Success ?? false;
+    string message = ViewBag.Message;
+}
 
 <link href="~/LoginAssets/Login.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+
 <div class="form-structor">
     <form method="post" asp-controller="authentication" asp-action="Register" class="signup">
         <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
@@ -16,24 +21,38 @@
             <input type="password" asp-for="PasswordHash" class="input" placeholder="Password" style="height: 50px;" />
             <input type="text" asp-for="Location" class="input" placeholder="Location" style="height: 50px;" />
             <input type="text" asp-for="phoneNumber" class="input" placeholder="phoneNumber" style="color:black; height: 50px;" />
-
             <input type="date" asp-for="Birthday" class="input" style="color:black; height: 50px;" />
             <p class="error">@ViewBag.RegisterError</p>
         </div>
         <button type="submit" class="submit-btn">Sign up</button>
-        @if (ViewBag.RegisterError != null)
-        {
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: '@ViewBag.RegisterError',
-                    confirmButtonText: 'OK'
-                });
-            </script>
-        }
     </form>
+</div>
+
+@if (isSuccess)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '@message',
+            confirmButtonText: 'OK'
+        });
+    </script>
+}
+
+@if (ViewBag.RegisterError != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@ViewBag.RegisterError',
+            confirmButtonText: 'OK'
+        });
+    </script>
+}
 
     <form method="post" asp-controller="authentication" asp-action="Login" class="login slide-up">
         <div class="center">
