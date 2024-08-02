@@ -11,13 +11,13 @@
 
 		<meta name="description" content="" />
 		<meta name="keywords" content="bootstrap, bootstrap4" />
-
+		<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 		<!-- Bootstrap CSS -->
 		<link href="~/HomeAssets/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 		<link href="~/HomeAssets/css/tiny-slider.css" rel="stylesheet">
 		<link href="~/HomeAssets/css/style.css" rel="stylesheet">
-		<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+		<title>Furni Website </title>
 	</head>
 </head>
 <body>
@@ -63,12 +63,16 @@
 							<a class="nav-link" asp-action="ContactUs" asp-controller="Home">Contact Us</a>
 						</li>
 					}
-					<li><a class="nav-link" asp-action="Index" asp-controller="Cart"><img src="~/HomeAssets/images/cart.svg"><sup><span class="circle">@ViewBag.Count</span> </sup> </a></li>
+					
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 						@if (@ViewBag.Login != null)
 						{
 							<li><a class="nav-link" asp-action="Index" asp-controller="UserProfile"><img src="~/HomeAssets/images/user.svg"></a></li>
-							<li><a class="nav-link" asp-action="Logout" asp-controller="authentication">Logout</a></li>
+							<li><a class="nav-link" asp-action="Logout" asp-controller="authentication"><i class="fa-solid fa-right-from-bracket" style="color: #cdd0d5; font-size:20px;padding-top: 5px;"></i></a></li>
+							
+
+						
+						
 						}
 						else
 						{
@@ -76,6 +80,13 @@
 
 						}
 					</ul>
+					<li>
+						<a class="nav-link" asp-action="Index" asp-controller="Cart">
+							<img src="~/HomeAssets/images/cart.svg"><sup>
+								<span style="width: 18px;display: inline-block; height: 18px; border-radius: 50%; background-color: #ff000085;color: white;text-align: center;font-size: 15px;">@ViewBag.Count</span>
+							</sup>
+						</a>
+					</li>
 
 				</ul>
 
@@ -177,7 +188,7 @@
 	<script src="~/HomeAssets/js/tiny-slider.js"></script>
 	<script src="~/HomeAssets/js/custom.js"></script>
 
-
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 </html>

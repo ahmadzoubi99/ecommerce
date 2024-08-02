@@ -1,28 +1,32 @@
-﻿@* For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860 *@
-@{
+﻿@{
     @model Tuple<IEnumerable<Category>, IEnumerable<Product>>;
     Layout = "HomeLayout";
 }
 <link href="~/css/shop.css" rel="stylesheet" />
-
 <!-- Start Hero Section -->
-<div class="hero">
+
+<div class="hero" style="height:450px;">
+    <br /> <br />   <br /> 
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-lg-5">
                 <div class="intro-excerpt">
-                    <h1>Shop </h1>
-                    <p class="mb-4">Explore our dedication to crafting personalized, stylish, and functional spaces that truly reflect your unique vision.</p>
+                    <h1>Shop</h1>
+                    <p class="mb-4">Discover our curated collection of high-quality, stylish furniture pieces designed to elevate your living space. Whether you're looking for a cozy sofa, a chic dining set, or a sleek office chair, we have something to suit every taste and budget. </p>
                 </div>
-            </div>
+@*                 <i class="fa-solid fa-arrow-down" style="color:white; font-size:80px;"></i>
+ *@            </div>
             <div class="col-lg-7">
-                <div class="hero-img-wrap" >
+                <div class="hero-img-wrap">
                     <img src="~/HomeAssets/images/couch.png" class="img-fluid">
                 </div>
             </div>
         </div>
     </div>
 </div>
+<br />
+<br /><br />
+<br />
 
 <!-- End Hero Section -->
 

@@ -45,17 +45,17 @@ body {
 }
 
 /*----------------------------------shope---------------*/
-.circle {
+/*.circle {
     display: inline-block;
-    width: 30px; /* Adjust size as needed */
-    height: 30px; /* Adjust size as needed */
-    line-height: 30px; /* Make sure this matches the height */
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    background-color: red; /* Circle background color */
-    color: white; /* Text color */
+    background-color: #ff000085;
+    color: white;
     text-align: center;
-    font-size: 15px; /* Font size */
-}
+    font-size: 15px;
+    line-height: 30px;
+}*/
 body {
   font-family: "Inter", sans-serif;
   font-weight: 400;
