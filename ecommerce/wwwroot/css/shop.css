@@ -5,14 +5,12 @@ body {
     color: #333;
 }
 .hero {
-    padding: 10px 0;  Reduce padding to minimize height 
+   height:30%
 }
-
-.hero {
-    padding: 10px 0;
-    Reduce padding to minimize height
+.hero-img-wrap
+{
+    margin-top:-10%
 }
-
 .container {
 }
 
@@ -100,4 +98,8 @@ body {
 
 .intro-excerpt h1 {
     white-space: nowrap; /* Prevent the text from wrapping to the next line */
+}
+.text-center
+{
+    margin-top:5%;
 }
