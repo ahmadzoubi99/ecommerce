@@ -22,6 +22,8 @@ namespace ecommerce.Controllers
         // GET: ContactUs
         public async Task<IActionResult> Index()
         {
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             var myContext = _context.ContactUsMessages.Include(c => c.User);
             return View(await myContext.ToListAsync());
         }

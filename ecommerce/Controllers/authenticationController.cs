@@ -36,6 +36,12 @@ namespace Ecommerce.Controllers
                 HttpContext.Session.SetString("image", existingUser.ImagePath);
 
                 int x =Convert.ToInt32(HttpContext.Session.GetInt32("userId"));
+                if (HttpContext.Session.GetInt32("countOfItem") > 0)
+                {
+                    return RedirectToAction("Index", "Cart");
+                }
+                
+
                 switch (existingUser.RoleId)
                 {
                     case 1:

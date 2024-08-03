@@ -228,9 +228,43 @@ namespace ecommerce.Controllers
             return View("Shop", model);
         }
 
-		
+  
 
+        public IActionResult OrderUser()
+        {
+            var userId = HttpContext.Session.GetInt32("userId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "authentication");
+            }
+
+            var orders = myContext.Orders
+                .Where(o => o.UserId == userId)
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                .Include(o => o.User)
+                .ToList();
+
+            return View(orders);
+        }
+
+        public IActionResult ItemInOrder(int id)
+        {
+            var order = myContext.Orders
+                .Where(o => o.Id == id)
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                .FirstOrDefault();
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order);
+        }
     
 
-    }
+
+}
 }
