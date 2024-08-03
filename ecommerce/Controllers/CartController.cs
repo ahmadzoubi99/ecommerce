@@ -148,7 +148,7 @@ namespace ecommerce.Controllers
         }
         public IActionResult ProcessCheckout()
         {
-            HttpContext.Session.GetString("totalAmount");
+            ViewBag.totalAmount = HttpContext.Session.GetString("totalAmount");
 
             if (HttpContext.Session.GetInt32("userId") == null)
             {
@@ -241,6 +241,8 @@ namespace ecommerce.Controllers
 
         public IActionResult SuccessfulPayment()
         {
+			ViewBag.totalAmount = HttpContext.Session.GetString("totalAmount");
+
 			if (HttpContext.Session.GetInt32("userId") != null)
 			{
 				ViewBag.Login = "Login";
