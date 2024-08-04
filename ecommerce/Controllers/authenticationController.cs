@@ -53,30 +53,34 @@ namespace Ecommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday,Location,phoneNumber")] User user)
+        public async Task<IActionResult> Register
+            ([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday,Location,phoneNumber")] User user)
         {
-            if (string.IsNullOrWhiteSpace(user.Username) || string.IsNullOrWhiteSpace(user.Email) || string.IsNullOrWhiteSpace(user.PasswordHash))
-            {
-                TempData["ErrorMessage"] = "Please fill in all the required fields.";
-                return RedirectToAction("Register");
-            }
-
+            user.Username = user.Username;
+            user.Email= user.Email;
             user.ImagePath = "";
-            user.FullName = user.Username;
+            user.FullName=user.Username;
+            user.PasswordHash = user.PasswordHash;
+            user.Birthday= user.Birthday;
+            user.Location = user.Location;
+            user.phoneNumber = user.phoneNumber;
             user.RoleId = 2;
-            var existingUser = _context.Users.FirstOrDefault(u => u.Email == user.Email);
+            var existingUser = _context.Users
+                .Where(u => u.Email == user.Email)
+                .FirstOrDefault();
 
             if (existingUser != null)
             {
-                TempData["RegisterError"] = "Email is already used.";
-                return RedirectToAction("Register");
+                ViewBag.RegisterError = "Email is already used";
+                return View("Login", user);
             }
-
-            _context.Add(user);
-            await _context.SaveChangesAsync();
-
-            TempData["SuccessMessage"] = "Registration successful!";
-            return RedirectToAction("Login");
+            else
+            {
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                // Redirect to the login page or another appropriate action
+                return RedirectToAction("Login");
+            }
         }
 
 
