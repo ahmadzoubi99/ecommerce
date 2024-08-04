@@ -23,7 +23,9 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday")] User user)
         {
-            var existingUser = _context.Users.Where(u => u.Email == user.Email && u.PasswordHash == user.PasswordHash).Include(p=>p.Role).FirstOrDefault();
+            
+			var existingUser = _context.Users.Where(u => u.Email == user.Email && u.PasswordHash == user.PasswordHash).
+                Include(p=>p.Role).FirstOrDefault();
 
             if (existingUser != null)
             {
@@ -34,6 +36,12 @@ namespace Ecommerce.Controllers
                 HttpContext.Session.SetString("image", existingUser.ImagePath);
 
                 int x =Convert.ToInt32(HttpContext.Session.GetInt32("userId"));
+                if (HttpContext.Session.GetInt32("countOfItem") > 0)
+                {
+                    return RedirectToAction("Index", "Cart");
+                }
+                
+
                 switch (existingUser.RoleId)
                 {
                     case 1:
@@ -56,6 +64,7 @@ namespace Ecommerce.Controllers
         public async Task<IActionResult> Register
             ([Bind("Id,Username,PasswordHash,Email,FullName,ImagePath,RoleId,Birthday,Location,phoneNumber")] User user)
         {
+<<<<<<< HEAD
             user.Username = user.Username;
             user.Email= user.Email;
             user.ImagePath = "";
@@ -68,6 +77,30 @@ namespace Ecommerce.Controllers
             var existingUser = _context.Users
                 .Where(u => u.Email == user.Email)
                 .FirstOrDefault();
+=======
+            if (string.IsNullOrEmpty(user.Username))
+            {
+                ViewBag.RegisterError = "Enter your username";
+                return View("Login", user);
+            }
+            if (string.IsNullOrEmpty(user.PasswordHash))
+            {
+                ViewBag.RegisterError = "Enter your password";
+                return View("Login", user);
+            }
+            if (string.IsNullOrEmpty(user.Email))
+            {
+                ViewBag.RegisterError = "Enter your email";
+                return View("Login", user);
+            }
+            if (user.Birthday == null)
+            {
+                ViewBag.RegisterError = "Enter your birthday";
+                return View("Login", user);
+            }
+
+            var existingUser = _context.Users.FirstOrDefault(u => u.Email == user.Email);
+>>>>>>> 40f774a5c2b383cd629d429fd8aeceafe096b023
 
             if (existingUser != null)
             {
@@ -76,14 +109,23 @@ namespace Ecommerce.Controllers
             }
             else
             {
+<<<<<<< HEAD
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 // Redirect to the login page or another appropriate action
                 return RedirectToAction("Login");
+=======
+                user.RoleId = 2;
+                user.FullName = user.Username;
+                user.ImagePath = " ";
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                ViewBag.Success = true;
+                ViewBag.Message = "Registration Successful!";
+                return View("Login");
+>>>>>>> 40f774a5c2b383cd629d429fd8aeceafe096b023
             }
         }
-
-
 
 
         public IActionResult Logout()

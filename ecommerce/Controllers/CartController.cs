@@ -4,6 +4,7 @@ using Ecommerce.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace ecommerce.Controllers
 {
@@ -147,6 +148,8 @@ namespace ecommerce.Controllers
         }
         public IActionResult ProcessCheckout()
         {
+            ViewBag.totalAmount = HttpContext.Session.GetString("totalAmount");
+
             if (HttpContext.Session.GetInt32("userId") == null)
             {
                return RedirectToAction("Login", "authentication");
@@ -238,6 +241,8 @@ namespace ecommerce.Controllers
 
         public IActionResult SuccessfulPayment()
         {
+			ViewBag.totalAmount = HttpContext.Session.GetString("totalAmount");
+
 			if (HttpContext.Session.GetInt32("userId") != null)
 			{
 				ViewBag.Login = "Login";

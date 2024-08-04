@@ -22,6 +22,8 @@ namespace ecommerce.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
+            ViewBag.name = HttpContext.Session.GetString("name");
+            ViewBag.image = HttpContext.Session.GetString("image");
             var myContext = _context.Orders.Include(o => o.User);
             return View(await myContext.ToListAsync());
         }

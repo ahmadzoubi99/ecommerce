@@ -73,11 +73,12 @@
                                         </div>
                                     </td>
                                     <td>$@(item.Price * item.Quantity)</td>
-                                    <td>$@(item.Price * item.Quantity)</td>
                                     <td>
                                         <form asp-action="RemoveFromCart" method="post">
                                             <input type="hidden" name="productId" value="@item.ProductId" />
-                                            <button type="submit" class="btn btn-danger">Remove</button>
+                                            <button type="submit" class="btn btn-danger">
+                                         <img src="~/icon/delete.png" />
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>
@@ -95,7 +96,7 @@
                     <div class="col-md-6 mb-3 mb-md-0" style="color:red">
 
                         <form asp-action="ClearCart" method="post">
-                            <button type="submit" class="btn btn-warning">Clear Cart</button>
+                            <button type="submit" class="btn btn-warning" style="background-color:darkred">Clear Cart</button>
                         </form>
 @*                         <button class="btn btn-black btn-sm btn-block">Clear Cart</button>
  *@                    </div>

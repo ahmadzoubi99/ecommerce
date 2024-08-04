@@ -62,11 +62,21 @@
 						<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "ContactUs" ? "active" : "")">
 							<a class="nav-link" asp-action="ContactUs" asp-controller="Home">Contact Us</a>
 						</li>
+						<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "OrderUser" ? "active" : "")">
+							<a class="nav-link" asp-action="OrderUser" asp-controller="Home">Order</a>
+						</li>
 					}
-					
+					<li>
+						<a class="nav-link" asp-action="Index" asp-controller="Cart">
+							<img src="~/HomeAssets/images/cart.svg"><sup>
+								<span style="width: 18px;display: inline-block; height: 18px; border-radius: 50%; background-color: #ff000085;color: white;text-align: center;font-size: 15px;">@ViewBag.Count</span>
+							</sup>
+						</a>
+					</li>
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 						@if (@ViewBag.Login != null)
 						{
+
 							<li><a class="nav-link" asp-action="Index" asp-controller="UserProfile"><img src="~/HomeAssets/images/user.svg"></a></li>
 							<li><a class="nav-link" asp-action="Logout" asp-controller="authentication"><i class="fa-solid fa-right-from-bracket" style="color: #cdd0d5; font-size:20px;padding-top: 5px;"></i></a></li>
 							
@@ -80,13 +90,7 @@
 
 						}
 					</ul>
-					<li>
-						<a class="nav-link" asp-action="Index" asp-controller="Cart">
-							<img src="~/HomeAssets/images/cart.svg"><sup>
-								<span style="width: 18px;display: inline-block; height: 18px; border-radius: 50%; background-color: #ff000085;color: white;text-align: center;font-size: 15px;">@ViewBag.Count</span>
-							</sup>
-						</a>
-					</li>
+
 
 				</ul>
 
@@ -103,10 +107,10 @@
 	<footer class="footer-section">
 		<div class="container relative">
 
-			<div class="sofa-img">
+		@* 	<div class="sofa-img">
 				<img src="~/HomeAssets/images/sofa.png" alt="Image" class="img-fluid">
 			</div>
-
+ *@
 
 			<div class="row g-5 mb-5">
 				<div class="col-lg-4">

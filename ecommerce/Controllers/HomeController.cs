@@ -113,6 +113,9 @@ namespace ecommerce.Controllers
         }
         public IActionResult ContactUs()
 		{
+			var count = HttpContext.Session.GetInt32("countOfItem");
+			ViewBag.Count = HttpContext.Session.GetInt32("countOfItem");
+
 			if (HttpContext.Session.GetInt32("userId") != null)
 			{
 				ViewBag.Login = "Login";
@@ -126,6 +129,9 @@ namespace ecommerce.Controllers
         public async Task<IActionResult> ContactUs([Bind("Id,Name,Email,Subject,Message,UserId")] ContactUs contactUs)
         {
 			contactUs.Subject = "";
+			var count = HttpContext.Session.GetInt32("countOfItem");
+			ViewBag.Count = HttpContext.Session.GetInt32("countOfItem");
+
 			if (HttpContext.Session.GetInt32("userId") != null)
 			{
 				ViewBag.Login = "Login";
@@ -141,6 +147,9 @@ namespace ecommerce.Controllers
         
         public IActionResult AboutUs()
 		{
+			var count = HttpContext.Session.GetInt32("countOfItem");
+			ViewBag.Count = HttpContext.Session.GetInt32("countOfItem");
+
 			if (HttpContext.Session.GetInt32("userId") != null)
 			{
 				ViewBag.Login = "Login";
@@ -174,6 +183,9 @@ namespace ecommerce.Controllers
         }
 		public IActionResult CTestimonial() 
 		{
+			var count = HttpContext.Session.GetInt32("countOfItem");
+			ViewBag.Count = HttpContext.Session.GetInt32("countOfItem");
+
 			if (HttpContext.Session.GetInt32("userId") != null)
 			{
 				ViewBag.Login = "Login";
@@ -228,9 +240,61 @@ namespace ecommerce.Controllers
             return View("Shop", model);
         }
 
-		
+  
 
+        public IActionResult OrderUser()
+        {
+			var count = HttpContext.Session.GetInt32("countOfItem");
+			ViewBag.Count = HttpContext.Session.GetInt32("countOfItem");
+
+			var userId = HttpContext.Session.GetInt32("userId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "authentication");
+            }
+
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Login = "Login";
+			}
+			var orders = myContext.Orders
+                .Where(o => o.UserId == userId)
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                .Include(o => o.User)
+                .ToList();
+
+            return View(orders);
+        }
+
+        public IActionResult ItemInOrder(int id)
+        {
+			var count = HttpContext.Session.GetInt32("countOfItem");
+			ViewBag.Count = HttpContext.Session.GetInt32("countOfItem");
+
+			if (HttpContext.Session.GetInt32("userId") != null)
+			{
+				ViewBag.Login = "Login";
+			}
+			var order = myContext.Orders
+                .Where(o => o.Id == id)
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                .FirstOrDefault();
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+            var orderById = myContext.Orders.Where(p => p.Id == id).FirstOrDefault();
+            ViewBag.totalAmount = orderById.TotalAmount;
+            ViewBag.OrderDate = orderById.CreatedAt;
+
+
+            return View(order);
+        }
     
 
-    }
+
+}
 }

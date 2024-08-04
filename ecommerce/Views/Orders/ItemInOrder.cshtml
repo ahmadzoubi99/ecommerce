@@ -41,11 +41,7 @@
                                     <td>%@item.Product.DiscountValue</td>
                                     <td>@((item.Product.Price -item.Product.Price*item.Product.DiscountValue/100)*item.Quantity)</td>
 
-                               @*      <td>@item.Product.Name</td>
-                                    <td><img src="@Url.Content("~/images/" + item.Product.Image)" alt="Product Image" style="width:100px;" /></td>
-                                    <td>@item.Product.Price.ToString("C")</td>
-                                    <td>@item.Quantity</td>
-                                    <td>@item.Product.DiscountValue</td> *@
+                           
                                 </tr>
                             }
                         </tbody>
