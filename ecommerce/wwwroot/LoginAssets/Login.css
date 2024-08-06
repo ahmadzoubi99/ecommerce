@@ -21,6 +21,7 @@ html, body {
 .form-structor {
     background-color: #222;
     border-radius: 15px;
+    margin:0 auto;
     height: 650px;
     width: 450px;
     position: relative;
