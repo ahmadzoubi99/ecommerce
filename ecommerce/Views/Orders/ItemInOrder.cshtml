@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ecommerce.Models.OrderItem>
+
+@{
+    Layout = "AdminLayout";
+}
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Order Table</h6>
+                <div class="d-flex mb-3">
+                    <div class="flex-grow-1 mr-2" style="flex-basis: 75%;">
+              
+                    </div>
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">product name</th>
+                                <th scope="col">product image</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">DiscountValue</th>
+                                <th scope="col">Total </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>@item.Product.Name</td>
+                                    <td><img src="@Url.Content("~/images/" + item.Product.Image)" alt="Product Image" style="width:150px;" /></td>
+                                    <td>@item.Product.Price</td>
+                                    <td>@item.Quantity</td>
+                                    <td>%@item.Product.DiscountValue</td>
+                                    <td>@((item.Product.Price -item.Product.Price*item.Product.DiscountValue/100)*item.Quantity)</td>
+
+                           
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>TotalAmount</td>
+                                <td>Order Date</td>
+                            </tr>
+                            <tr>
+                                <td>@ViewBag.totalAmount</td>
+                                <td>@ViewBag.OrderDate</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

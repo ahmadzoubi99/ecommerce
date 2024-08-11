@@ -11,44 +11,92 @@
 
 		<meta name="description" content="" />
 		<meta name="keywords" content="bootstrap, bootstrap4" />
-
+		<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 		<!-- Bootstrap CSS -->
 		<link href="~/HomeAssets/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 		<link href="~/HomeAssets/css/tiny-slider.css" rel="stylesheet">
 		<link href="~/HomeAssets/css/style.css" rel="stylesheet">
-		<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+		<title>Furni Website </title>
 	</head>
 </head>
 <body>
+	<!-- Main content -->
+
 	<!-- Start Header/Navigation -->
 	<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
 		<div class="container">
-			<a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+			<a class="navbar-brand" href="index.html">HomeHaven<span></span></a>
 
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
 			<div class="collapse navbar-collapse" id="navbarsFurni">
-				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+			@* 	<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
 					<li class="nav-item active">
-						<a class="nav-link" href="index.html">Home</a>
+						<a class="nav-link" asp-action="Index" asp-controller="Home">Home</a>
 					</li>
-					<li><a class="nav-link" href="Home/shop">Shop</a></li>
-					<li><a class="nav-link" href="home/about">About us</a></li>
-					<li><a class="nav-link" href="services.html">Services</a></li>
-					<li><a class="nav-link" href="blog.html">Blog</a></li>
-					<li><a class="nav-link" href="home/ContactUs">Contact us</a></li>
-					<li><a class="nav-link" href="home/cart">Contact us</a></li>
+					<li><a class="nav-link" asp-action="shop" asp-controller="Home">Shop</a></li>
+					<li><a class="nav-link" asp-action="AboutUs" asp-controller="Home" >About us</a></li>
+					<li><a class="nav-link" asp-action="ContactUs" asp-controller="Home" >Contact us</a></li>
+			
+				</ul>
+			 *@
+				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+					<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
+						<a class="nav-link" asp-action="Index" asp-controller="Home">Home</a>
+					</li>
+					<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Shop" ? "active" : "")">
+						<a class="nav-link" asp-action="shop" asp-controller="Home">Shop</a>
+					</li>
+					<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "AboutUs" ? "active" : "")">
+						<a class="nav-link" asp-action="AboutUs" asp-controller="Home">About Us</a>
+					</li>
+					@if (@ViewBag.Login != null)
+					{
+						<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "CTestimonial" ? "active" : "")">
+							<a class="nav-link" asp-action="CTestimonial" asp-controller="Home">Testimonial</a>
+						</li>
+						<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "ContactUs" ? "active" : "")">
+							<a class="nav-link" asp-action="ContactUs" asp-controller="Home">Contact Us</a>
+						</li>
+						<li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "OrderUser" ? "active" : "")">
+							<a class="nav-link" asp-action="OrderUser" asp-controller="Home">Order</a>
+						</li>
+					}
+					<li>
+						<a class="nav-link" asp-action="Index" asp-controller="Cart">
+							<img src="~/HomeAssets/images/cart.svg"><sup>
+								<span style="width: 18px;display: inline-block; height: 18px; border-radius: 50%; background-color: #ff000085;color: white;text-align: center;font-size: 15px;">@ViewBag.Count</span>
+							</sup>
+						</a>
+					</li>
+					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+						@if (@ViewBag.Login != null)
+						{
+
+							<li><a class="nav-link" asp-action="Index" asp-controller="UserProfile"><img src="~/HomeAssets/images/user.svg"></a></li>
+							<li><a class="nav-link" asp-action="Logout" asp-controller="authentication"><i class="fa-solid fa-right-from-bracket" style="color: #cdd0d5; font-size:20px;padding-top: 5px;"></i></a></li>
+							
+
+						
+						
+						}
+						else
+						{
+							<li><a class="nav-link" asp-action="Login" asp-controller="authentication">Login</a></li>
+
+						}
+					</ul>
+
 
 				</ul>
 
-				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-					<li><a class="nav-link" href="#"><img src="~/HomeAssets/images/user.svg"></a></li>
-					<li><a class="nav-link" href="cart.html"><img src="~/HomeAssets/images/cart.svg"></a></li>
-				</ul>
+@* 				<li><a class="nav-link" asp-action="Index" asp-controller="Cart"><img src="~/HomeAssets/images/cart.svg"><sup><span class="circle">@ViewBag.Count</span> </sup> </a></li>
+ *@
+				
 			</div>
 		</div>
 
@@ -59,37 +107,15 @@
 	<footer class="footer-section">
 		<div class="container relative">
 
-			<div class="sofa-img">
+		@* 	<div class="sofa-img">
 				<img src="~/HomeAssets/images/sofa.png" alt="Image" class="img-fluid">
 			</div>
-
-			<div class="row">
-				<div class="col-lg-8">
-					<div class="subscription-form">
-						<h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
-
-						<form action="#" class="row g-3">
-							<div class="col-auto">
-								<input type="text" class="form-control" placeholder="Enter your name">
-							</div>
-							<div class="col-auto">
-								<input type="email" class="form-control" placeholder="Enter your email">
-							</div>
-							<div class="col-auto">
-								<button class="btn btn-primary">
-									<span class="fa fa-paper-plane"></span>
-								</button>
-							</div>
-						</form>
-
-					</div>
-				</div>
-			</div>
+ *@
 
 			<div class="row g-5 mb-5">
 				<div class="col-lg-4">
-					<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
-					<p class="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant</p>
+					<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">HomeHaven<span>.</span></a></div>
+					<p class="mb-4">Transform your living space into a sanctuary with our curated selection of stylish and affordable home furnishings, designed to inspire comfort and elegance in every corner of your home.</p>
 
 					<ul class="list-unstyled custom-social">
 						<li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
@@ -144,7 +170,7 @@
 					<div class="col-lg-6">
 						<p class="mb-2 text-center text-lg-start">
 							Copyright &copy;
-							<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a>  <!-- License information: https://untree.co/license/ -->
+							<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by Ahmad ,Wesal ,Duaa </a> Distributed By Orange</a>  <!-- License information: https://untree.co/license/ -->
 						</p>
 					</div>
 
@@ -166,7 +192,7 @@
 	<script src="~/HomeAssets/js/tiny-slider.js"></script>
 	<script src="~/HomeAssets/js/custom.js"></script>
 
-
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 </html>

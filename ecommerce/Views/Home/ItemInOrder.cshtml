@@ -1,0 +1,47 @@
+﻿@model ecommerce.Models.Order
+
+@{
+    ViewBag.Title = "Order Invoice";
+    Layout = "HomeLayout";
+}
+
+
+<h2>Order Invoice</h2>
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Image</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Discount Value</th>
+            <th scope="col">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>
+                    <img src="@Url.Content("~/images/" + item.Product.Image)" alt="Product Image" style="width:150px;" />
+                </td>
+                <td>@item.Product.Price</td>
+                <td>@item.Quantity</td>
+                <td>@item.Product.DiscountValue %</td>
+                <td>@((item.Product.Price - item.Product.Price * item.Product.DiscountValue / 100) * item.Quantity)</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>TotalAmount</td>
+            <td>Order Date</td>
+        </tr>
+        <tr>
+            <td>@ViewBag.totalAmount</td>
+            <td>@ViewBag.OrderDate</td>
+        </tr>
+    </tfoot>
+</table>

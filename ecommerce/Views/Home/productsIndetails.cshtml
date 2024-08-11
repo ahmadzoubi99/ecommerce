@@ -1,0 +1,92 @@
+﻿@model ecommerce.Models.Product
+@{
+    Layout = "HomeLayout";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="product-image">
+                <img src="~/images/@Model.Image" class="img-fluid" alt="Product Image" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="product-details">
+                <h1 class="product-title">@Model.Name</h1>
+                <p class="product-category">@Model.Category.Name</p>
+                <p class="product-description">@Model.Description</p>
+                <div class="product-pricing">
+                    @if (Model.DiscountValue > 0)
+                    {
+                        <p>
+                            <del class="old-price">$@Model.Price</del>
+                            <strong class="discount-percentage">(@Model.DiscountValue% OFF)</strong>
+                        </p>
+                        <strong class="product-price">$@(Model.Price - (Model.Price * Model.DiscountValue / 100))</strong>
+                    }
+                    else
+                    {
+                        <strong class="product-price">$@Model.Price</strong>
+                    }
+                </div>
+                <div class="product-actions mt-4">
+                    <form method="post" asp-action="AddToCart" asp-controller="Cart">
+                        <input type="hidden" name="ProductId" value="@Model.Id" />
+                        <input type="hidden" name="Quantity" value="1" />
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .product-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .product-category {
+        font-size: 1.2rem;
+        color: #777;
+        margin-bottom: 1rem;
+    }
+
+    .product-description {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .product-pricing {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .old-price {
+        font-size: 1.2rem;
+        color: #999;
+        text-decoration: line-through;
+        margin-right: 0.5rem;
+    }
+
+    .discount-percentage {
+        font-size: 1.2rem;
+        color: #d9534f;
+    }
+
+    .product-price {
+        font-size: 1 .product-price
+
+    {
+        font-size: 2rem;
+        color: #5cb85c;
+        font-weight: bold;
+    }
+
+    .product-actions .btn-primary {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+</style>

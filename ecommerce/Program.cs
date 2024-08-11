@@ -1,40 +1,64 @@
+using ecommerce.Cart;
 using Ecommerce.Context;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Ecommerce
 {
-	public class Program
-	{
-		public static void Main(string[] args)
-		{
-			var builder = WebApplication.CreateBuilder(args);
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-			// Add services to the container.
-			builder.Services.AddControllersWithViews();
-			builder.Services.AddSession(option => {
-				option.IdleTimeout = TimeSpan.FromMinutes(60);
-			});
-			builder.Services.AddDbContext<MyContext>(options =>
-		   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-			var app = builder.Build();
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
 
-			// Configure the HTTP request pipeline.
-			if (!app.Environment.IsDevelopment())
-			{
-				app.UseExceptionHandler("/Home/Error");
-			}
-			app.UseStaticFiles();
+            // Add HttpContextAccessor
+            builder.Services.AddHttpContextAccessor();
 
-			app.UseRouting();
+            // Register the session service
+            builder.Services.AddSession(option =>
+            {
+                option.IdleTimeout = TimeSpan.FromMinutes(60);
+            });
 
-			app.UseAuthorization();
-			app.UseSession();
+            // Register the DbContext
+            builder.Services.AddDbContext<MyContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-			app.MapControllerRoute(
-				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}");
+            // Register application services
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<ICartService, CartService>();
+            builder.Services.AddTransient<EmailService>(); // Register EmailService
 
-			app.Run();
-		}
-	}
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthentication(); // Ensure authentication middleware is used
+            app.UseAuthorization();
+
+            app.UseSession(); // Ensure session middleware is used
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.Run();
+        }
+    }
 }

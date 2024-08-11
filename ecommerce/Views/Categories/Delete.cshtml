@@ -1,0 +1,59 @@
+﻿@model ecommerce.Models.Category
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "AdminLayout";
+}
+
+<style>
+    .custom-input,
+    .custom-select {
+        border: 1px solid #ced4da; /* Border color for inputs and selects */
+        border-radius: 0.375rem; /* Rounded corners */
+        padding: 0.375rem 0.75rem; /* Padding for inputs and selects */
+    }
+
+    .custom-input {
+        background-color: #ffffff; /* Background color for input fields */
+    }
+
+    .custom-select {
+        background-color: #ffffff; /* Background color for select dropdowns */
+    }
+</style>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Delete Category</h6>
+                <form asp-action="Delete">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="row mb-3">
+                        <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Name" class="form-control custom-input" readonly />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Description" class="form-control custom-input" readonly />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-10 offset-sm-2">
+                            <button type="submit" value="Delete" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

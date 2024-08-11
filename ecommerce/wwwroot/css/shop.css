@@ -1,0 +1,105 @@
+﻿/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+.hero {
+   height:30%;
+}
+.hero-img-wrap
+{
+    margin-top:-10%
+}
+.container {
+}
+
+/* Section Title */
+.section-title h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+    border-bottom: 2px solid #ddd;
+}
+
+    .nav-tabs .nav-item {
+        margin-bottom: -1px;
+    }
+
+    .nav-tabs .nav-link {
+        border: 1px solid transparent;
+        border-radius: 0;
+        color: rgb(59, 93, 80);
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .nav-tabs .nav-link.active {
+            color: #fff;
+            background-color: rgb(59, 93, 80);
+            border-color: rgb(59, 93, 80);
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: black;
+        }
+
+/* Tab Content */
+.tab-content {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-top: none;
+    background-color: #fff;
+}
+
+/* Tab Header */
+.tab-header p {
+    font-size: 1.2rem;
+    color: #777;
+}
+
+.tab-header h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Menu Items */
+.menu-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .menu-item img {
+        max-width: 100px;
+        margin-right: 20px;
+    }
+
+    .menu-item h4 {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .menu-item p {
+        font-size: 1rem;
+        color: #777;
+    }
+
+.custom-img-width {
+    width: 500%; /* Adjust this value to make the image wider than its actual width */
+}
+
+.intro-excerpt h1 {
+    white-space: nowrap; /* Prevent the text from wrapping to the next line */
+}
+.text-center
+{
+    margin-top:5%;
+}

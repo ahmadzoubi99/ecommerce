@@ -1,0 +1,107 @@
+﻿@{
+    @model Tuple<IEnumerable<Category>, IEnumerable<Product>>;
+    Layout = "HomeLayout";
+}
+<link href="~/css/shop.css" rel="stylesheet" />
+<!-- Start Hero Section -->
+
+<div class="hero" style="height:450px;">
+    <br /> <br />   <br /> 
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Shop</h1>
+                    <p class="mb-4">Discover our curated collection of high-quality, stylish furniture pieces designed to elevate your living space. Whether you're looking for a cozy sofa, a chic dining set, or a sleek office chair, we have something to suit every taste and budget. </p>
+                </div>
+@*                 <i class="fa-solid fa-arrow-down" style="color:white; font-size:80px;"></i>
+ *@            </div>
+            <div class="col-lg-7">
+                <div class="hero-img-wrap">
+                    <img src="~/HomeAssets/images/couch.png" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br /><br />
+<br />
+
+<!-- End Hero Section -->
+
+<div class="container section-title" data-aos="fade-up">
+    <h2 class="text-center">Our Product</h2>
+</div>
+
+<div class="container">
+    <ul class="nav nav-tabs d-flex justify-content-center" id="productTabs" role="tablist" data-aos="fade-up" data-aos-delay="100">
+        <li class="nav-item" role="presentation">
+            <form  asp-controller="Home" asp-action="AllProductInAllCategorie" method="post">
+                <button class="nav-link active" id="starters-tab" data-bs-toggle="tab" href="#menu-starters" role="tab" aria-controls="menu-starters" aria-selected="true">
+                    <h4>All</h4>
+                </button>
+            </form>
+        </li>
+
+        @foreach (var item in Model.Item1)
+        {
+            <li class="nav-item" role="presentation">
+                <form asp-controller="Home" asp-action="ProductByCategorie" asp-route-id="@item.Id" method="post">
+                    <button type="submit" class="nav-link" role="tab" aria-controls="menu-breakfast" aria-selected="false">
+                        <h4>@item.Name</h4>
+                    </button>
+                </form>
+            </li>
+        }
+
+    </ul>
+
+</div>
+
+<br />
+<br />
+
+<div class="untree_co-section product-section before-footer-section">
+    <div class="container">
+        <div class="row">
+            <!-- Start Column 4 -->
+             @foreach (var item in Model.Item2)
+            {
+                <div class="col-12 col-md-4 col-lg-3 mb-5">
+                    <a class="product-item" asp-action="productsIndetails" asp-controller="Home" asp-route-id="@item.Id">
+                        
+                            <img src="@Url.Content("~/images/" + item.Image)" class="img-fluid product-thumbnail" alt="Product Image">
+                        
+                        <h3 class="product-title">@item.Name</h3>
+                       
+                        @if (item.DiscountValue > 0)
+                        {
+                            <p>
+                                <del class="old-price">$@item.Price</del>
+                                <strong class="discount-percentage">(@item.DiscountValue% OFF)</strong>
+                            </p>
+                            <strong class="product-price">$@(item.Price - (item.Price * item.DiscountValue / 100))</strong>
+                        }
+                        else
+                        {
+                            <strong class="product-price">$@item.Price</strong>
+                        }
+                        <span class="icon-cross">
+                            <form method="post" asp-action="AddToCart" asp-controller="Cart">
+                                <input type="hidden" name="ProductId" value="@item.Id" />
+                                <input type="hidden" name="Quantity" value="1" />
+                                <button type="submit">
+                                    <img src="~/HomeAssets/images/cross.svg" class="img-fluid" alt="Add to Cart">
+                                </button>
+                            </form>
+                        </span>
+                    </a>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</div>
+<script src="~/js/shop.js"></script>

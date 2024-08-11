@@ -50,20 +50,38 @@
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="~/AdminAssets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle" src="~/images/@ViewBag.image" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
+                        <h6 class="mb-0">@ViewBag.name</h6>
                         <span>Admin</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="/Teachers/Index" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a asp-action="Index" asp-controller="Students" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Student</a>
-                    <a asp-action="Index" asp-controller="Classes" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>class</a>
-                    <a asp-action="Index" asp-controller="Assessments" asp-controller" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Assessment</a>
+                    <a asp-action="Index" asp-controller="Admin" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Admin" ? "active" : "")">
+                        <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                    <a asp-action="Index" asp-controller="Categories" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Categories" ? "active" : "")">
+                        <i class="fa fa-th me-2"></i>Categories
+                    </a>
+                    <a asp-action="Index" asp-controller="Products" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Products" ? "active" : "")">
+                        <i class="fa fa-th me-2"></i>Products
+                    </a>
+                    <a asp-action="Index" asp-controller="Orders" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Orders" ? "active" : "")">
+                        <i class="fa fa-keyboard me-2"></i>Orders
+                    </a>
+                    <a asp-action="Index" asp-controller="Users" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Users" ? "active" : "")">
+                        <i class="fa fa-table me-2"></i>User
+                    </a>
+                    <a asp-action="Index" asp-controller="Testimonials" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Testimonials" ? "active" : "")">
+                        <i class="fa fa-table me-2"></i>Testimonials
+                    </a>
+                    <a asp-action="Index" asp-controller="ContactUs" class="nav-item nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "ContactUs" ? "active" : "")">
+                        <i class="fa fa-table me-2"></i>Contact Us
+                    </a>
                 </div>
+
             </nav>
         </div>
         <!-- Sidebar End -->
@@ -147,13 +165,15 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <img class="rounded-circle me-lg-2" src="@Url.Content("~/images/" +@ViewBag.image)" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">@ViewBag.name</span>
+
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a  class="dropdown-item" asp-action="Logout" asp-controller="auth">Log Out</a>
+
+                            <a class="dropdown-item" asp-action="Logout" asp-controller="authentication">>Log Out</a>
                         </div>
                     </div>
                 </div>

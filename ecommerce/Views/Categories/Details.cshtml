@@ -1,0 +1,53 @@
+﻿@model ecommerce.Models.Category
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "AdminLayout";
+}
+
+<style>
+    .custom-input,
+    .custom-select {
+        border: 1px solid #ced4da; /* Border color for inputs and selects */
+        border-radius: 0.375rem; /* Rounded corners */
+        padding: 0.375rem 0.75rem; /* Padding for inputs and selects */
+    }
+
+    .custom-input {
+        background-color: #ffffff; /* Background color for input fields */
+    }
+
+    .custom-select {
+        background-color: #ffffff; /* Background color for select dropdowns */
+    }
+</style>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Category Details</h6>
+                <dl class="row">
+                    <dt class="col-sm-2 col-form-label font-weight-bold">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+                    <dd class="col-sm-10 mb-3">
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt class="col-sm-2 col-form-label font-weight-bold">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+                    <dd class="col-sm-10 mb-3">
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+                </dl>
+                <div class="row mb-3">
+                    <div class="col-sm-10 offset-sm-2">
+                        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
